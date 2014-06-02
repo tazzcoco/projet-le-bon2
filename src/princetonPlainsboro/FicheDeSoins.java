@@ -32,6 +32,10 @@ public class FicheDeSoins {
     public Date getDate() {
         return date;
     }
+    
+    public DefaultListModel getActes(){
+        return actes;
+    }
 
     public void ajouterActe(Acte acte) {
         actes.addElement(acte);

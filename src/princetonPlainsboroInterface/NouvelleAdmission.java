@@ -1,10 +1,12 @@
 package princetonPlainsboroInterface;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import princetonPlainsboro.*;
 
 /**
@@ -422,11 +425,23 @@ public class NouvelleAdmission extends javax.swing.JFrame {
             ListSelectionModel lsm = (ListSelectionModel) e.getSource();
             int minIndex = lsm.getMinSelectionIndex();
             int maxIndex = lsm.getMaxSelectionIndex();
+            DecimalFormat dec = new DecimalFormat("0.00");
             for (int i = minIndex; i <= maxIndex; i++) {
                 if (lsm.isSelectedIndex(i)) {
                     dp = new DossierPatient();
-                    for (int f = 0; f < dm.getFiches().size();f++){
-                    //kikoo
+                    for (int f = 0; f < dm.getFiches().size(); f++) {
+                        if (dm.getFiches().get(f).getPatient().equals(dm.getPatients().get(i))) {
+                            for (int a = 0; a < dm.getFiches().get(f).getActes().size(); a++) {
+                                Object[] line = new Object[6];
+                                line[0] = dm.getFiches().get(f).getDate().afficherDate();
+                                line[1] = ((Acte) dm.getFiches().get(f).getActes().get(a)).getLibelle();
+                                line[2] = "Pas d'observations pour l'instant";
+                                line[3] = dm.getFiches().get(f).getMedecin().toString();
+                                line[4] = ((Acte) dm.getFiches().get(f).getActes().get(a)).getCode();
+                                line[5] = dec.format(((Acte) dm.getFiches().get(f).getActes().get(a)).cout());
+                                ((DefaultTableModel) dp.getJTable2().getModel()).addRow(line);
+                            }
+                        }
                     }
                     //dp.getJTable2().set
                     dp.getJTextArea2().setText(dm.getPatients().get(i).afficherDP());
