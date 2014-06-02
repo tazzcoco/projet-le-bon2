@@ -9,11 +9,13 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import princetonPlainsboro.*;
+import princetonPlainsboroInterface.NouvelleAdmission.ComboBoxListener;
 
 /**
  *
@@ -27,7 +29,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
     private MenuAdministratif ma;
     private DossierMédecinAdministratif dma;
     private DossierMedical dm;
-    
+    private ComboBoxListener cbl;
     private TextFieldListener tfl;
     private final ListSelectionModel listSelectionModel;
 
@@ -35,11 +37,13 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(getParent());
         lmal = new ListeMédecinsAdministratifListener();
+        cbl = new ComboBoxListener();
         tfl = new TextFieldListener();
         jButton1.addActionListener(lmal);
         jButton2.addActionListener(lmal);
         jButton3.addActionListener(lmal);
         jTextField3.addActionListener(tfl);
+        jComboBox1.addActionListener(cbl);
         listSelectionModel = jList2.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListMedecinAdminListener());
     }
@@ -120,7 +124,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
         jComboBox1.setBackground(new java.awt.Color(0, 153, 51));
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Radiologie", "Dermatologie", "Oncologie", "Hématologie", "Neurologie" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Radiologie", "Oncologie", "Hématologie", "Dermatologie", "Neurologie", "Cardiologie", "ORL", "Anesthésiologie", "Gérontologie", "Gynécologie", "Pédiatrie", "Urologie" }));
 
         jTextField3.setBackground(new java.awt.Color(0, 0, 0));
         jTextField3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
@@ -305,6 +309,24 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
                     setVisible(false);
                 }
             }
+        }
+    }
+    
+    public class ComboBoxListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JComboBox cb = (JComboBox) e.getSource();
+            DefaultListModel<Medecin> medecins = new DefaultListModel();
+            for (int i = 0; i < dm.getFiches().size(); i++) {
+                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getMedecin().getSpecialite())) {
+                    if (!medecins.contains(dm.getFiches().get(i).getMedecin())) {
+                        medecins.addElement(dm.getFiches().get(i).getMedecin());
+                    }
+                }
+            }
+            jList2.setModel(medecins);
+            jList2.repaint();
         }
     }
     
