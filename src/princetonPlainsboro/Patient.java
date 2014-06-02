@@ -3,19 +3,20 @@ package princetonPlainsboro;
 import java.util.Calendar;
 
 public class Patient {
+
     //attributs
     private String nom;
     private String prenom;
     private long numSecu;
     private String adresse;
     private Date dateNaissance;
-    
+
     //constructeur 1
     public Patient(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
     }
-    
+
     //constructeur 2
     public Patient(String nom, String prenom, Date dateNaissance, long numSecu, String adresse) {
         this.nom = nom;
@@ -58,9 +59,9 @@ public class Patient {
     public Date getDateNaissance() {
         return dateNaissance;
     }
-    
+
     //méthode pour calculer l'age d'un patient
-    public int calculAge(){
+    public int calculAge() {
         Calendar curr = Calendar.getInstance();
         int yeardiff = curr.get(Calendar.YEAR) - dateNaissance.getAnnee();
         if (dateNaissance.getMois() > curr.get(Calendar.MONTH)) {
@@ -74,14 +75,17 @@ public class Patient {
         }//end if/else
         return yeardiff;
     }
-    
+
     //méthode affichant le dossier patient, le tableau des actes concernant un patient est instancié dans l'interface DossierPatient
     public String afficherDP() {
         String s = "Dossier Patient";
         s += "\n\nNom : " + nom;
         s += "\nPrénom : " + prenom;
-        s += "\nDate de Naissance :" + dateNaissance /*" (" + this.calculAge() + " ans)"*/;
-        s += "\nAdresse : "+adresse;
+        s += "\nDate de Naissance :" + dateNaissance;
+        if (dateNaissance != null) {
+            s += " (" + this.calculAge() + " ans)";
+        }
+        s += "\nAdresse : " + adresse;
         s += "\nN° sécurité sociale : " + numSecu;
         return s;
     }
