@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -16,10 +17,10 @@ import princetonPlainsboro.*;
 
 public class ListePatientsAdministratif extends javax.swing.JFrame {
 
-    private ListePatientsAdministratifListener lpal;
-    private ListSelectionModel listSelectionModel;
-    private TextFieldListener tfl;
-    
+    private final ListePatientsAdministratifListener lpal;
+    private final ListSelectionModel listSelectionModel;
+    private final TextFieldListener tfl;
+    private ComboBoxListener cbl;
     private DossierPatientAdministratif dpa;
     private MenuAdministratif ma;
     private ListePatientsAdministratif lpa;
@@ -29,12 +30,14 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
     public ListePatientsAdministratif() {
         initComponents();
         setLocationRelativeTo(getParent());
+        cbl = new ComboBoxListener();
         lpal = new ListePatientsAdministratifListener();
         tfl = new TextFieldListener();
         jButton1.addActionListener(lpal);
         jButton2.addActionListener(lpal);
         jButton3.addActionListener(lpal);
         jTextField3.addActionListener(tfl);
+        jComboBox1.addActionListener(cbl);
         listSelectionModel = jList2.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListAdmListener());
     }
@@ -250,7 +253,9 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
-
+    public JComboBox getJComboBox1() {
+        return jComboBox1;
+    }
     public javax.swing.JList getjList2() {
         return jList2;
     }
@@ -309,6 +314,23 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
         }
     }
     
+        public class ComboBoxListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JComboBox cb = (JComboBox) e.getSource();
+            DefaultListModel<Patient> patients = new DefaultListModel();
+            for (int i = 0; i < dm.getFiches().size(); i++) {
+                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getMedecin())) {
+                    if (!patients.contains(dm.getFiches().get(i).getPatient())) {
+                        patients.addElement(dm.getFiches().get(i).getPatient());
+                    }
+                }
+            }
+            jList2.setModel(patients);
+            jList2.repaint();
+        }
+    }
     public class TextFieldListener implements ActionListener {
 
         @Override

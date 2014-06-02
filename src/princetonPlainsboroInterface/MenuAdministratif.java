@@ -9,6 +9,7 @@ import princetonPlainsboro.*;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -231,6 +232,8 @@ public class MenuAdministratif extends javax.swing.JFrame {
                 lpa.setBounds(positionFenetre);
                 lpa.setDM(dm);
                 lpa.getjList2().setModel(dm.getPatients());
+                DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getMedecins().toArray());
+                lpa.getJComboBox1().setModel(cbModel);
                 lpa.setVisible(true);
                 setVisible(false);
             } else if (source == jButton2) {

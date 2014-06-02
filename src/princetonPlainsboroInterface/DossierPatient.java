@@ -58,9 +58,14 @@ public class DossierPatient extends javax.swing.JFrame {
     public void setDM(DossierMedical dm) {
         this.dm = dm;
     }
-    public void setJTable (JTable jTable2) {
+    public void setJTable2(JTable jTable2) {
         this.jTable2 = jTable2;
     }
+    
+    public JTable getJTable2(){
+        return jTable2;
+    }
+    
     public void setValueAt(Object value, int row, int col) {
         for (int i =0; i< jTable2.getRowCount();i++){
         // jTable2.rowData[row][col] = value;
