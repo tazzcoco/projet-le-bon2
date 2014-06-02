@@ -425,6 +425,10 @@ public class NouvelleAdmission extends javax.swing.JFrame {
             for (int i = minIndex; i <= maxIndex; i++) {
                 if (lsm.isSelectedIndex(i)) {
                     dp = new DossierPatient();
+                    for (int f = 0; f < dm.getFiches().size();f++){
+                    //kikoo
+                    }
+                    //dp.getJTable2().set
                     dp.getJTextArea2().setText(dm.getPatients().get(i).afficherDP());
                     dp.setCurrentPatient(dm.getPatients().get(i));
                     dp.setDM(dm);
