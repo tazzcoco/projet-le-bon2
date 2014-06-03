@@ -37,10 +37,12 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
         jButton2.addActionListener(lpal);
         jButton3.addActionListener(lpal);
         jTextField3.addActionListener(tfl);
+        jComboBox2.addActionListener(cbl);
+        jComboBox1.addActionListener(cbl);
         listSelectionModel = jList2.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListAdmListener());
     }
-    
+
     public DossierMedical getDM() {
         return dm;
     }
@@ -48,7 +50,7 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
     public void setDM(DossierMedical dm) {
         this.dm = dm;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,9 +72,9 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -142,14 +144,14 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel2.setText("Médecin :");
 
-        jComboBox2.setBackground(new java.awt.Color(0, 153, 51));
+        jComboBox1.setBackground(new java.awt.Color(0, 153, 51));
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel3.setText("Date : ");
 
-        jComboBox1.setBackground(new java.awt.Color(0, 153, 51));
-        jComboBox1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dates croissantes", "Dates décroissantes", "Entre deux dates" }));
+        jComboBox2.setBackground(new java.awt.Color(0, 153, 51));
+        jComboBox2.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dates croissantes", "Dates décroissantes", "Entre deux dates" }));
 
         jButton4.setBackground(new java.awt.Color(0, 153, 51));
         jButton4.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
@@ -171,11 +173,11 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton4))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -194,10 +196,10 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1)
+                        .addComponent(jComboBox2)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
@@ -281,6 +283,14 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
         return jList2;
     }
 
+    public JComboBox getJComboBox1() {
+        return jComboBox1;
+    }
+
+    public JComboBox getJComboBox2() {
+        return jComboBox2;
+    }
+
     public class ListePatientsAdministratifListener implements ActionListener {
 
         @Override
@@ -334,24 +344,33 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
             }
         }
     }
-    
-        public class ComboBoxListener implements ActionListener {
+
+    public class ComboBoxListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JComboBox cb = (JComboBox) e.getSource();
             DefaultListModel<Patient> patients = new DefaultListModel();
-            for (int i = 0; i < dm.getFiches().size(); i++) {
-                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getMedecin())) {
-                    if (!patients.contains(dm.getFiches().get(i).getPatient())) {
-                        patients.addElement(dm.getFiches().get(i).getPatient());
+            if (cb == jComboBox1) {
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (cb.getSelectedItem().equals(dm.getFiches().get(i).getMedecin())) {
+                        if (!patients.contains(dm.getFiches().get(i).getPatient())) {
+                            patients.addElement(dm.getFiches().get(i).getPatient());
+                        }
+                    }
+                }
+                jList2.setModel(patients);
+                jList2.repaint();
+            }else if (cb == jComboBox2){
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (cb.getSelectedItem().equals("Dates croissantes")) {
+                        dm.trierDates();
                     }
                 }
             }
-            jList2.setModel(patients);
-            jList2.repaint();
         }
     }
+
     public class TextFieldListener implements ActionListener {
 
         @Override
