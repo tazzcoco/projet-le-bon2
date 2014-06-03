@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -34,6 +35,8 @@ public class FicheDeSoins extends javax.swing.JFrame {
     private MenuMedical mm;
     private Patient p;
     private Medecin m;
+    private princetonPlainsboro.FicheDeSoins f;
+    DefaultListModel<princetonPlainsboro.FicheDeSoins> fichesP = new DefaultListModel();
 
     private ComboBoxListener cbl;
     private FicheDeSoinsListener fdsl;
@@ -51,6 +54,7 @@ public class FicheDeSoins extends javax.swing.JFrame {
         jButton3.addActionListener(fdsl);
         jButton4.addActionListener(fdsl);
         jButton5.addActionListener(fdsl);
+        jButton6.addActionListener(fdsl);
         jComboBox1.addActionListener(cbl);
         jComboBox2.addActionListener(cbl);
     }
@@ -319,9 +323,9 @@ public class FicheDeSoins extends javax.swing.JFrame {
         final princetonPlainsboro.FicheDeSoins f;
 
         DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
-        cb1 = new JComboBox(cbModel1);
+        cb1 = new JComboBox();
         DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
-        cb2 = new JComboBox(cbModel2);
+        cb2 = new JComboBox();;
         newPatient = new JButton("Nouveau Patient");
 
         //creation des JTextFields pour récupérer les renseignements du patient et du JPanel        
@@ -356,7 +360,6 @@ public class FicheDeSoins extends javax.swing.JFrame {
         };
 
         ActionListener buttonListener = new ActionListener() {
-            Patient p;
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -405,6 +408,12 @@ public class FicheDeSoins extends javax.swing.JFrame {
         cb1.addActionListener(cbListener);
         cb2.addActionListener(cbListener);
         newPatient.addActionListener(buttonListener);
+        
+        cb1.setModel(cbModel1);
+        cb2.setModel(cbModel2);
+        cb1.setSelectedItem(dm.getMedecins().get(0));
+        cb2.setSelectedItem(dm.getPatients().get(0));
+                
 
         //panel global
         JPanel panelGlobal = new JPanel();
@@ -454,6 +463,75 @@ public class FicheDeSoins extends javax.swing.JFrame {
             dm.ajouterFiche(f);
         }
         jTextArea1.setText(dm.afficher());
+    }
+
+    public void supprimerFiche() {
+        JPanel panel1 = new JPanel();
+        JLabel labelPatient = new JLabel("Sélectionner le patient : ");
+        DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
+        final JComboBox cb1 = new JComboBox(cbModel1);
+        final JComboBox cb2 = new JComboBox();
+
+        ActionListener cbListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb = (JComboBox) e.getSource();
+                if (cb == cb1) {
+                    for (int i = 0; i < dm.getPatients().size(); i++) {
+                        if (cb.getSelectedItem().equals(dm.getPatients().get(i))) {
+                            p = dm.getPatients().get(i);
+                        }
+                    }
+                    for (int i = 0; i < dm.getFiches().size(); i++) {
+                        if (p.equals(dm.getFiches().get(i).getPatient())) {
+                            fichesP.addElement(dm.getFiches().get(i));
+                        }
+                    }
+                    DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(fichesP.toArray());
+                    cb2.setModel(cbModel2);
+                } else if (cb == cb2) {
+                    for (int i = 0; i < dm.getFiches().size(); i++) {
+                        if (cb.getSelectedItem().equals(dm.getFiches().get(i))) {
+                            f = dm.getFiches().get(i);
+                        }
+                    }
+                }
+            }
+        };
+
+        cb1.addActionListener(cbListener);
+        cb2.addActionListener(cbListener);
+
+        cb1.setModel(cbModel1);        
+        cb1.setSelectedItem(dm.getPatients().get(0));
+        cb2.setSelectedItem(fichesP.get(0));
+
+        panel1.add(labelPatient);
+        panel1.add(cb1);
+
+        int result = JOptionPane.showConfirmDialog(null, panel1,
+                "Choix du patient", JOptionPane.OK_CANCEL_OPTION);
+
+        JPanel panel2 = new JPanel();
+        JLabel labelFiche = new JLabel("Sélectionner la fiche à supprimer : ");
+        panel2.add(labelFiche);
+        panel2.add(cb2);
+
+        if (result == JOptionPane.OK_OPTION) {
+            int result2 = JOptionPane.showConfirmDialog(null, panel2,
+                    "Suppression de la fiche de soins", JOptionPane.OK_CANCEL_OPTION);
+            if (result2 == JOptionPane.OK_OPTION) {
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (f.equals(dm.getFiches().get(i))) {
+                        dm.supprimerFiche(dm.getFiches().get(i));
+                        getJTextArea1().setText(dm.afficher());
+                        getJTextArea1().setCaretPosition(0);
+                        getJTextArea1().repaint();
+                    }
+                }
+            }
+        }
     }
 
     public void afficherEntreDeuxDateBox() {
@@ -549,7 +627,8 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 ajouterFiche();
                 repaint();
             } else if (source == jButton6) {
-                
+                supprimerFiche();
+                repaint();
             }
         }
     }

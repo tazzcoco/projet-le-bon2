@@ -81,4 +81,8 @@ public class FicheDeSoins {
         }
         return total;
     }
+    
+    public String toString(){
+        return "Fiche de soins du "+date.toString()+", "+medecin.toString()+", "+patient.toString();
+    }
 }

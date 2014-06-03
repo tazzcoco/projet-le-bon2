@@ -54,6 +54,11 @@ public class DossierMedical {
                 patients.addElement(fiche.getPatient());
             }
         }
+
+    }
+
+    public void supprimerFiche(FicheDeSoins fiche) {
+        fiches.removeElement(fiche);
     }
 
     public String afficher() {
@@ -285,5 +290,5 @@ public class DossierMedical {
         medecins.removeElement(m);
         m = null;
         System.out.println("Médecin retiré !");
-    }    
+    }
 }
