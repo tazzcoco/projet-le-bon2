@@ -48,6 +48,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
         jButton1.addActionListener(lmal);
         jButton2.addActionListener(lmal);
         jButton3.addActionListener(lmal);
+        jButton4.addActionListener(lmal);
         jTextField3.addActionListener(tfl);
         jComboBox1.addActionListener(cbl);
         listSelectionModel = jList2.getSelectionModel();
@@ -160,6 +161,11 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(0, 153, 51));
         jButton4.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jButton4.setText("Sans tri");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -225,6 +231,10 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +313,13 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
                 lpa.setVisible(true);
                 setVisible(false);
             } else if (source == jButton3) {
+                lma = new ListeMédecinsAdministratif();
+                lma.setBounds(positionFenetre);
+                lma.setDM(dm);
+                lma.getJList2().setModel(dm.getMedecins());
+                lma.setVisible(true);
+                setVisible(false);
+            }else if (source == jButton4) {
                 lma = new ListeMédecinsAdministratif();
                 lma.setBounds(positionFenetre);
                 lma.setDM(dm);
