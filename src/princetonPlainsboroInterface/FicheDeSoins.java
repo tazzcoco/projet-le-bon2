@@ -48,6 +48,7 @@ public class FicheDeSoins extends javax.swing.JFrame {
         jButton4.addActionListener(fdsl);
         jButton5.addActionListener(fdsl);
         jComboBox1.addActionListener(cbl);
+        jComboBox2.addActionListener(cbl);
     }
 
     public DossierMedical getDM() {
@@ -82,7 +83,8 @@ public class FicheDeSoins extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,9 +168,10 @@ public class FicheDeSoins extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel3.setText("Patient : ");
 
-        jButton7.setBackground(new java.awt.Color(0, 153, 51));
-        jButton7.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        jButton7.setText("Sans tri");
+        jComboBox2.setBackground(new java.awt.Color(0, 153, 51));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sans tri", "Dates croissantes", "Coûts croissants", "Entre deux dates" }));
+
+        jLabel4.setText("Trier :");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -191,8 +194,10 @@ public class FicheDeSoins extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox2, 0, 190, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -210,10 +215,11 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -277,11 +283,12 @@ public class FicheDeSoins extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -291,6 +298,10 @@ public class FicheDeSoins extends javax.swing.JFrame {
 
     public JComboBox getJComboBox1() {
         return jComboBox1;
+    }
+
+    public JComboBox getJComboBox2() {
+        return jComboBox2;
     }
 
     public JTextArea getJTextArea1() {
@@ -437,13 +448,29 @@ public class FicheDeSoins extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             String s = "";
             JComboBox cb = (JComboBox) e.getSource();
-            for (int i = 0; i < dm.getFiches().size(); i++) {
-                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getPatient())) {
-                    s += dm.getFiches().get(i).afficher();
+            if (cb == jComboBox1) {
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (cb.getSelectedItem().equals(dm.getFiches().get(i).getPatient())) {
+                        s += dm.getFiches().get(i).afficher();
+                    }
+                }
+                jTextArea1.setText(s);
+                jTextArea1.repaint();
+            }else if (cb == jComboBox2){
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (cb.getSelectedItem().equals("Sans tri")){
+                        
+                    }else if(cb.getSelectedItem().equals("Dates croissantes")){
+                        dm.trierDates();
+                        repaint();
+                    }else if(cb.getSelectedItem().equals("Coûts croissants")){
+                        
+                    }else if(cb.getSelectedItem().equals("Entre deux dates")){
+                        
+                    }
                 }
             }
-            jTextArea1.setText(s);
-            jTextArea1.repaint();
+
         }
     }
 }

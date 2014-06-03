@@ -361,12 +361,6 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
                 }
                 jList2.setModel(patients);
                 jList2.repaint();
-            }else if (cb == jComboBox2){
-                for (int i = 0; i < dm.getFiches().size(); i++) {
-                    if (cb.getSelectedItem().equals("Dates croissantes")) {
-                        dm.trierDates();
-                    }
-                }
             }
         }
     }
