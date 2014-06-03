@@ -461,14 +461,15 @@ public class FicheDeSoins extends javax.swing.JFrame {
                     if (cb.getSelectedItem().equals("Sans tri")){
                         
                     }else if(cb.getSelectedItem().equals("Dates croissantes")){
-                        dm.trierDates();
-                        repaint();
+                        s+= dm.trierDates();
                     }else if(cb.getSelectedItem().equals("Coûts croissants")){
                         
                     }else if(cb.getSelectedItem().equals("Entre deux dates")){
                         
                     }
                 }
+                jTextArea1.setText(s);
+                jTextArea1.repaint();
             }
 
         }
