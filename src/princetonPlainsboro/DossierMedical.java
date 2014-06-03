@@ -102,8 +102,8 @@ public class DossierMedical {
         return cout;
     }
 
-    public void afficherListePatients(Medecin m) {
-        System.out.println("> liste des patients du " + m.toString() + " :");
+    public String afficherListePatients(Medecin m) {
+        String s = "> liste des patients du " + m.toString() + " :";
         Vector<Patient> liste = new Vector<Patient>();
         // 'liste' contient tous les patients deja affiches
         // --> ceci permet de ne pas reafficher un patient deja affiche
@@ -112,11 +112,12 @@ public class DossierMedical {
             if (m.equals(f.getMedecin())) {
                 Patient p = f.getPatient();
                 if (!liste.contains(p)) {
-                    System.out.println(" - " + p.toString());
+                    s += "\n - " + p.toString();
                     liste.add(p);
                 }
             }
         }
+        return s;
     }
 
     public int nombreFichesIntervalle(Date d1, Date d2) {
@@ -131,14 +132,15 @@ public class DossierMedical {
         return n;
     }
 
-    public void trierDates() {
+    public String trierDates() {
+        String s = "";
         List<FicheDeSoins> copieFiches = new ArrayList<FicheDeSoins>();
 
         //on remplit copieFiches avec les éléments de la DefaultListModel fiches
         for (int i = 0; i < fiches.size(); i++) {
             copieFiches.add(fiches.get(i));
         }
-        System.out.println("Listes des fiches rangées par date croissante :");
+        s += "Listes des fiches rangées par date croissante :";
         while (!copieFiches.isEmpty()) {
             // on cherche la fiche de soins de date minimale :
             int imin = 0;
@@ -151,11 +153,12 @@ public class DossierMedical {
                 }
             }
             // on affiche la fiche de soins trouvee :
-            f1.afficher();
-            System.out.println("------------------------");
+            s += f1.afficher();
+            s += "------------------------";
             //on la supprime de la liste :
             copieFiches.remove(imin);
         }
+        return s;
     }
 
     // tri generique :

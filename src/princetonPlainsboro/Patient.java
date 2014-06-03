@@ -27,7 +27,11 @@ public class Patient {
     }
 
     public String toString() {
-        return prenom + " " + nom;
+        String s =prenom + " " + nom + ", "+ dateNaissance;
+        if (dateNaissance != null) {
+            s += " (" + this.calculAge() + " ans)";
+        }
+        return s;
     }
 
     public boolean equals(Object o) {
