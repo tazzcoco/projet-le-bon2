@@ -63,7 +63,7 @@ public class FicheDeSoins {
             s += "\n    > " + a.toString();
         }
         s += "\n> Cout total des soins : " + dec.format(coutTotal());
-        s += "\n------------------------";
+        s += "\n------------------------\n";
         return s;
     }
 

@@ -5,12 +5,14 @@
  */
 package princetonPlainsboroInterface;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,6 +32,8 @@ public class FicheDeSoins extends javax.swing.JFrame {
     private ListeMedecinMedical lmm;
     private FicheDeSoins fds;
     private MenuMedical mm;
+    private Patient p;
+    private Medecin m;
 
     private ComboBoxListener cbl;
     private FicheDeSoinsListener fdsl;
@@ -309,16 +313,108 @@ public class FicheDeSoins extends javax.swing.JFrame {
     }
 
     public void ajouterFiche() {
+        final JComboBox cb1;
+        final JComboBox cb2;
+        final JButton newPatient;
+        final princetonPlainsboro.FicheDeSoins f;
+        
+        DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
+        cb1 = new JComboBox(cbModel1);
+        DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
+        cb2 = new JComboBox(cbModel2);
+        newPatient = new JButton("Nouveau Patient");
+
+        //creation des JTextFields pour récupérer les renseignements du patient et du JPanel        
+        final JTextField fieldPrenom = new JTextField(5);
+        final JTextField fieldNom = new JTextField(7);
+        final JTextField fieldBirth1 = new JTextField(3);
+        final JTextField fieldBirth2 = new JTextField(3);
+        final JTextField fieldBirth3 = new JTextField(7);
+        final JTextField fieldNumSecu = new JTextField(5);
+        final JTextField fieldAdresse = new JTextField(10);
+
+        //listeners
+        ActionListener cbListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb = (JComboBox) e.getSource();
+                if (cb == cb1) {
+                    for (int i = 0; i < dm.getMedecins().size(); i++) {
+                        if (cb.getSelectedItem().equals(dm.getMedecins().get(i))) {
+                            m = dm.getMedecins().get(i);
+                        }
+                    }
+                } else if (cb == cb2) {
+                    for (int i = 0; i < dm.getPatients().size(); i++) {
+                        if (cb.getSelectedItem().equals(dm.getPatients().get(i))) {
+                            p = dm.getPatients().get(i);
+                        }
+                    }
+                }
+            }
+        };
+
+        ActionListener buttonListener = new ActionListener() {
+            Patient p;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JButton source = (JButton) e.getSource();
+                if (source == newPatient) {
+                    //création des JLabels
+                    JLabel labelNom = new JLabel("Nom :");
+                    JLabel labelPrenom = new JLabel("Prénom :");
+                    JLabel labelBirth = new JLabel("Date de naissance :");
+                    JLabel labelAdresse = new JLabel("Adresse :");
+                    JLabel labelNumSecu = new JLabel("Numéro de sécurité sociale (13 chiffres) :");
+                    //création du JPanel
+                    JPanel panel3 = new JPanel();
+                    //création d'un panel pour les 3 JTextField de la date de naissance
+                    JPanel panelBirth = new JPanel();
+                    panelBirth.setLayout(new FlowLayout());
+                    panelBirth.add(fieldBirth1);
+                    panelBirth.add(fieldBirth2);
+                    panelBirth.add(fieldBirth3);
+                    //organisation de la fenêtre d'entrée utilisateur
+                    panel3.setLayout(new GridLayout(5, 2));
+                    panel3.add(labelNom);
+                    panel3.add(fieldNom);
+                    panel3.add(labelPrenom);
+                    panel3.add(fieldPrenom);
+                    panel3.add(labelBirth);
+                    panel3.add(panelBirth);
+                    panel3.add(labelAdresse);
+                    panel3.add(fieldAdresse);
+                    panel3.add(labelNumSecu);
+                    panel3.add(fieldNumSecu);
+
+                    //instanciation de la fenêtre d'entrée utilisateur
+                    int result = JOptionPane.showConfirmDialog(null, panel3,
+                            "Veuillez entrer les détails de la fiche de soins :", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION) {
+                        p = new Patient(fieldNom.getText(), fieldPrenom.getText(), new Date(Integer.parseInt(fieldBirth1.getText()), Integer.parseInt(fieldBirth2.getText()), Integer.parseInt(fieldBirth3.getText())), Long.parseLong(fieldNumSecu.getText()), fieldAdresse.getText());
+                        dm.ajouterPatient(p);
+                        DefaultComboBoxModel cbModel3 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                        cb2.setModel(cbModel3);
+                    }
+                }
+            }
+        };
+
+        cb1.addActionListener(cbListener);
+        cb2.addActionListener(cbListener);
+        newPatient.addActionListener(buttonListener);
+
         //panel global
         JPanel panelGlobal = new JPanel();
 
         //panel médecin
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        JLabel labelMedecin = new JLabel("Entrez le nom de famille du médecin");
-        JTextField fieldDoctorName = new JTextField(7);
+        JLabel labelMedecin = new JLabel("Médecin : ");
         panel1.add(labelMedecin);
-        panel1.add(fieldDoctorName);
+        panel1.add(cb1);
 
         //panel date
         JPanel panel2 = new JPanel();
@@ -332,65 +428,30 @@ public class FicheDeSoins extends javax.swing.JFrame {
         panel2.add(fieldMois);
         panel2.add(fieldAnnee);
 
-        //panel patient
-        //creation des JTextFields pour récupérer les renseignements du patient et du JPanel
-        JTextField fieldPrenom = new JTextField(5);
-        JTextField fieldNom = new JTextField(7);
-        JTextField fieldBirth1 = new JTextField(3);
-        JTextField fieldBirth2 = new JTextField(3);
-        JTextField fieldBirth3 = new JTextField(7);
-        JTextField fieldNumSecu = new JTextField(5);
-        JTextField fieldAdresse = new JTextField(10);
-        //création des JLabels
-        JLabel labelNom = new JLabel("Nom :");
-        JLabel labelPrenom = new JLabel("Prénom :");
-        JLabel labelBirth = new JLabel("Date de naissance :");
-        JLabel labelAdresse = new JLabel("Adresse :");
-        JLabel labelNumSecu = new JLabel("Numéro de sécurité sociale (13 chiffres) :");
-        //création du JPanel
-        JPanel panel3 = new JPanel();
-        //création d'un panel pour les 3 JTextField de la date de naissance
-        JPanel panelBirth = new JPanel();
-        panelBirth.setLayout(new FlowLayout());
-        panelBirth.add(fieldBirth1);
-        panelBirth.add(fieldBirth2);
-        panelBirth.add(fieldBirth3);
-        //organisation de la fenêtre d'entrée utilisateur
-        panel3.setLayout(new GridLayout(5, 2));
-        panel3.add(labelNom);
-        panel3.add(fieldNom);
-        panel3.add(labelPrenom);
-        panel3.add(fieldPrenom);
-        panel3.add(labelBirth);
-        panel3.add(panelBirth);
-        panel3.add(labelAdresse);
-        panel3.add(fieldAdresse);
-        panel3.add(labelNumSecu);
-        panel3.add(fieldNumSecu);
+        //panel patient        
+        JPanel panel4 = new JPanel();
+        panel4.setLayout(new BorderLayout());
+        JLabel labelPatient = new JLabel("Patient : ");
+        panel4.add(labelPatient, BorderLayout.LINE_START);
+        panel4.add(cb2, BorderLayout.CENTER);
+        panel4.add(newPatient, BorderLayout.PAGE_END);
 
         //organisation panelGlobal
-        panelGlobal.setLayout(new GridLayout(3, 1));
-        panelGlobal.add(panel1);
-        panelGlobal.add(panel2);
-        panelGlobal.add(panel3);
+        panelGlobal.setLayout(new BorderLayout());
+        panelGlobal.add(panel1, BorderLayout.PAGE_START);
+        panelGlobal.add(panel2, BorderLayout.CENTER);
+        panelGlobal.add(panel4, BorderLayout.PAGE_END);
 
         //instanciation de la fenêtre d'entrée utilisateur
         int result = JOptionPane.showConfirmDialog(null, panelGlobal,
-                "Veuillez entrer les détails du patient :", JOptionPane.OK_CANCEL_OPTION);
-        Patient p = null;
-        Medecin m = null;
-        p = new Patient(fieldNom.getText(), fieldPrenom.getText(), new Date(Integer.parseInt(fieldBirth1.getText()), Integer.parseInt(fieldBirth2.getText()), Integer.parseInt(fieldBirth3.getText())), Long.parseLong(fieldNumSecu.getText()), fieldAdresse.getText());
+                "Veuillez entrer les détails de la fiche de soins :", JOptionPane.OK_CANCEL_OPTION);
 
-        for (int j = 0; j < dm.getMedecins().size(); j++) {
-            if (fieldDoctorName.getText().toUpperCase().equals(dm.getMedecins().get(j).getNom().toUpperCase())) {
-                m = dm.getMedecins().get(j);
-            }
-        }
         Date date = new Date(Integer.parseInt(fieldJour.getText()), Integer.parseInt(fieldMois.getText()), Integer.parseInt(fieldAnnee.getText()));
-        princetonPlainsboro.FicheDeSoins f1 = new princetonPlainsboro.FicheDeSoins(p, m, date);
+
+        f = new princetonPlainsboro.FicheDeSoins(p, m, date);
+
         if (result == JOptionPane.OK_OPTION) {
-            dm.ajouterPatient(p);
-            dm.ajouterFiche(f1);
+            dm.ajouterFiche(f);
         }
         jTextArea1.setText(dm.afficher());
     }
@@ -467,12 +528,11 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 } else if (cb.getSelectedItem().equals("Entre deux dates")) {
 
                 }
-            
-            jTextArea1.setText(s);
-            jTextArea1.setCaretPosition(0);
-            jTextArea1.repaint();
-        }
+                jTextArea1.setText(s);
+                jTextArea1.setCaretPosition(0);
+                jTextArea1.repaint();
+            }
 
+        }
     }
-}
 }

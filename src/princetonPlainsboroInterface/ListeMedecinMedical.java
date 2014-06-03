@@ -414,7 +414,6 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
                 repaint();
             }
         }
-
     }
 
     public class ListMedecinMedListener implements ListSelectionListener {

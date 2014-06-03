@@ -58,7 +58,7 @@ public class DossierMedical {
 
     public String afficher() {
         String s = new String();
-        s += "Dossier medical informatisé :";
+        s += "Dossier medical informatisé :\n";
         s += "\n-----------------------------";
         for (int i = 0; i < fiches.size(); i++) {
             FicheDeSoins f = fiches.get(i);
@@ -140,7 +140,7 @@ public class DossierMedical {
         for (int i = 0; i < fiches.size(); i++) {
             copieFiches.add(fiches.get(i));
         }
-        s += "Listes des fiches rangées par date croissante :";
+        s += "Listes des fiches rangées par date croissante :\n";
         while (!copieFiches.isEmpty()) {
             // on cherche la fiche de soins de date minimale :
             int imin = 0;
@@ -165,7 +165,7 @@ public class DossierMedical {
     public String trier(ComparaisonFiches c) {
         String s = "";
         List<FicheDeSoins> copieFiches = new ArrayList<FicheDeSoins>();
-        s += "Liste des fiches de soins par coûts croissants :";
+        s += "Liste des fiches de soins par coûts croissants :\n";
         //on remplit copieFiches avec les éléments de la DefaultListModel fiches
         for (int i = 0; i < fiches.size(); i++) {
             copieFiches.add(fiches.get(i));
@@ -194,7 +194,7 @@ public class DossierMedical {
         String s = "";
         //on créé une liste de patient
         ArrayList<Patient> lp = new ArrayList<>();
-        s += "\nListe des patients :";
+        s += "Liste des patients :\n";
         //on la remplit et on affiche chaque patient sous la forme : NOM Prenom
         for (int i = 0; i < fiches.size(); i++) {
             if (!lp.contains(fiches.get(i).getPatient())) {
@@ -209,7 +209,7 @@ public class DossierMedical {
         String s = "";
         //même principe que pour afficherListePatients, on créé une liste de médecins en premier
         ArrayList<Medecin> lm = new ArrayList<Medecin>();
-        s += "\nListe des médecins :";
+        s += "Liste des médecins :\n";
         //on la remplit et on affiche chaque médecin sous la forme : NOM Prenom
         for (int i = 0; i < fiches.size(); i++) {
             if (!lm.contains(fiches.get(i).getMedecin())) {
