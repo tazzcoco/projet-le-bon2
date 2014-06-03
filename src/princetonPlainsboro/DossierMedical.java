@@ -276,53 +276,9 @@ public class DossierMedical {
         System.out.println("Patient retiré !");
     }
 
-    public void ajouterMedecin() {
-        //creation des JTextFields pour récupérer les renseignements du patient et du JPanel
-        JTextField fieldPrenom = new JTextField(5);
-        JTextField fieldNom = new JTextField(7);
-        JTextField fieldSpe = new JTextField(10);
-        JTextField fieldNumTel = new JTextField(10);
-        JPasswordField fieldMdp1 = new JPasswordField(10);
-        JPasswordField fieldMdp2 = new JPasswordField(10);
-        //création des JLabels
-        JLabel labelNom = new JLabel("Nom :");
-        JLabel labelPrenom = new JLabel("Prénom :");
-        JLabel labelSpe = new JLabel("Spécialité :");
-        JLabel labelNumTel = new JLabel("Numéro de téléphone :");
-        JLabel labelMdp1 = new JLabel("Mot de passe :");
-        JLabel labelMdp2 = new JLabel("Confirmer mot de passe :");
-        //création du JPanel
-        JPanel myPanel = new JPanel();
-
-        //organisation de la fenêtre d'entrée utilisateur
-        myPanel.setLayout(new GridLayout(6, 2));
-        myPanel.add(labelNom);
-        myPanel.add(fieldNom);
-        myPanel.add(labelPrenom);
-        myPanel.add(fieldPrenom);
-        myPanel.add(labelSpe);
-        myPanel.add(fieldSpe);
-        myPanel.add(labelNumTel);
-        myPanel.add(fieldNumTel);
-        myPanel.add(labelMdp1);
-        myPanel.add(fieldMdp1);
-        myPanel.add(labelMdp2);
-        myPanel.add(fieldMdp2);
-
-        //instanciation de la fenêtre d'entrée utilisateur
-        int result = JOptionPane.showConfirmDialog(null, myPanel,
-                "Veuillez entrer les détails du médecin :", JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            if (fieldMdp1.getText().equals(fieldMdp2.getText())) {
-                Medecin m = new Medecin(fieldNom.getText(), fieldPrenom.getText(), fieldSpe.getText(), fieldNumTel.getText(), fieldMdp2.getText());
-                medecins.addElement(m);
-                System.out.println("Médecin ajouté !");
-            } else {
-                JOptionPane.showMessageDialog(null, "Mots de passes différents",
-                        "avertissement",
-                        JOptionPane.WARNING_MESSAGE);
-            }//end if/else
-        }//end if
+    public void ajouterMedecin(Medecin m) {
+        medecins.addElement(m);
+        System.out.println("Médecin ajouté !");
     }
 
     public void retirerMedecin(Medecin m) {

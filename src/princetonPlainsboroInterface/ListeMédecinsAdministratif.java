@@ -5,12 +5,18 @@
  */
 package princetonPlainsboroInterface;
 
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -328,7 +334,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public class ComboBoxListener implements ActionListener {
 
         @Override
@@ -346,7 +352,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
             jList2.repaint();
         }
     }
-    
+
     public class TextFieldListener implements ActionListener {
 
         @Override

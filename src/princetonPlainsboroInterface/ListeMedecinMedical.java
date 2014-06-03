@@ -5,13 +5,19 @@
  */
 package princetonPlainsboroInterface;
 
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -48,6 +54,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
         jButton2.addActionListener(lmml);
         jButton3.addActionListener(lmml);
         jButton4.addActionListener(lmml);
+        jButton5.addActionListener(lmml);
         jComboBox1.addActionListener(cbl);
         jTextField1.addActionListener(tfl);
         listSelectionModel = jList1.getSelectionModel();
@@ -162,7 +169,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
         jComboBox1.setBackground(new java.awt.Color(0, 153, 51));
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Radiologie", "Oncologie", "Hématologie", "Dermatologie", "Neurologie", "Cardiologie", "ORL", "Anesthésiologie", "Gérontologie", "Gynécologie", "Pédiatrie", "Urologie" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tous", "Radiologie", "Oncologie", "Hématologie", "Dermatologie", "Neurologie", "Cardiologie", "ORL", "Anesthésiologie", "Gérontologie", "Gynécologie", "Pédiatrie", "Urologie" }));
 
         jList1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jScrollPane2.setViewportView(jList1);
@@ -314,6 +321,55 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
 
     }
 
+    public void ajouterMedecin() {
+        //creation des JTextFields pour récupérer les renseignements du patient et du JPanel
+        JTextField fieldPrenom = new JTextField(5);
+        JTextField fieldNom = new JTextField(7);
+        JTextField fieldSpe = new JTextField(10);
+        JTextField fieldNumTel = new JTextField(10);
+        JPasswordField fieldMdp1 = new JPasswordField(10);
+        JPasswordField fieldMdp2 = new JPasswordField(10);
+        //création des JLabels
+        JLabel labelNom = new JLabel("Nom :");
+        JLabel labelPrenom = new JLabel("Prénom :");
+        JLabel labelSpe = new JLabel("Spécialité :");
+        JLabel labelNumTel = new JLabel("Numéro de téléphone :");
+        JLabel labelMdp1 = new JLabel("Mot de passe :");
+        JLabel labelMdp2 = new JLabel("Confirmer mot de passe :");
+        //création du JPanel
+        JPanel myPanel = new JPanel();
+
+        //organisation de la fenêtre d'entrée utilisateur
+        myPanel.setLayout(new GridLayout(6, 2));
+        myPanel.add(labelNom);
+        myPanel.add(fieldNom);
+        myPanel.add(labelPrenom);
+        myPanel.add(fieldPrenom);
+        myPanel.add(labelSpe);
+        myPanel.add(fieldSpe);
+        myPanel.add(labelNumTel);
+        myPanel.add(fieldNumTel);
+        myPanel.add(labelMdp1);
+        myPanel.add(fieldMdp1);
+        myPanel.add(labelMdp2);
+        myPanel.add(fieldMdp2);
+
+        //instanciation de la fenêtre d'entrée utilisateur
+        int result = JOptionPane.showConfirmDialog(null, myPanel,
+                "Veuillez entrer les détails du médecin :", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if (fieldMdp1.getText().equals(fieldMdp2.getText())) {
+                Medecin m = new Medecin(fieldNom.getText(), fieldPrenom.getText(), fieldSpe.getText(), fieldNumTel.getText(), fieldMdp2.getText());
+                dm.ajouterMedecin(m);
+            } else {
+                JOptionPane.showMessageDialog(null, "Mots de passes différents",
+                        "Avertissement",
+                        JOptionPane.WARNING_MESSAGE);
+                ajouterMedecin();
+            }//end if/else
+        }//end if
+    }
+
     public class ListeMedecinMedicalListener implements ActionListener {
 
         @Override
@@ -340,7 +396,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
                 fds = new FicheDeSoins();
                 fds.setBounds(positionFenetre);
                 fds.setDM(dm);
-                fds.getJTextArea1().setText(dm.afficher());                
+                fds.getJTextArea1().setText(dm.afficher());
                 fds.getJTextArea1().setCaretPosition(0);
                 DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getPatients().toArray());
                 fds.getJComboBox1().setModel(cbModel);
@@ -353,6 +409,9 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
                 lmm.getJList1().setModel(dm.getMedecins());
                 lmm.setVisible(true);
                 setVisible(false);
+            } else if (source == jButton5) {
+                ajouterMedecin();
+                repaint();
             }
         }
 
@@ -372,8 +431,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
                 if (lsm.isSelectedIndex(i)) {
                     dmm = new DossierMedecinMedical();
                     dmm.getJTextArea1().setText(dm.getMedecins().get(i).afficherDM());
-                    //dmm.setDM(dm);
-                    //dmm.getJList3().setModel(dm.getPatients());
+                    dmm.setDM(dm);
                     dmm.setVisible(true);
                     setVisible(false);
                 }
@@ -387,28 +445,31 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             JComboBox cb = (JComboBox) e.getSource();
             DefaultListModel<Medecin> medecins = new DefaultListModel();
-            for (int i = 0; i < dm.getFiches().size(); i++) {
-                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getMedecin().getSpecialite())) {
-                    if (!medecins.contains(dm.getFiches().get(i).getMedecin())) {
-                        medecins.addElement(dm.getFiches().get(i).getMedecin());
+            for (int i = 0; i < dm.getMedecins().size(); i++) {
+                if (cb.getSelectedItem().equals(dm.getMedecins().get(i).getSpecialite())) {
+                    if (!medecins.contains(dm.getMedecins().get(i))) {
+                        medecins.addElement(dm.getMedecins().get(i));
                     }
+                } else if (cb.getSelectedItem().equals("Tous")) {
+                    medecins = dm.getMedecins();
                 }
             }
             jList1.setModel(medecins);
             jList1.repaint();
         }
     }
-    
+
     public class TextFieldListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             String search = jTextField1.getText();
             DefaultListModel<Medecin> medecins = new DefaultListModel();
-            for (int i = 0; i < dm.getFiches().size(); i++) {
-                if ((search.toUpperCase().equals(dm.getFiches().get(i).getMedecin().getNom().toUpperCase())) || (search.toUpperCase().equals(dm.getFiches().get(i).getMedecin().getPrenom().toUpperCase()))) {
-                    if (!medecins.contains(dm.getFiches().get(i).getMedecin())) {
-                        medecins.addElement(dm.getFiches().get(i).getMedecin());
+            for (int i = 0; i < dm.getMedecins().size(); i++) {
+                if ((search.toUpperCase().equals(dm.getMedecins().get(i).getNom().toUpperCase()))
+                        || (search.toUpperCase().equals(dm.getMedecins().get(i).getPrenom().toUpperCase()))) {
+                    if (!medecins.contains(dm.getMedecins().get(i))) {
+                        medecins.addElement(dm.getMedecins().get(i));
                     }
                 }
             }

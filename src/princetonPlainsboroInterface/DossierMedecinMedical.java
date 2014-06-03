@@ -279,6 +279,7 @@ public class DossierMedecinMedicalListener implements ActionListener {
                 lmm = new ListeMedecinMedical();
                 lmm.setBounds(positionFenetre);
                 lmm.setDM(dm);
+                lmm.getJList1().setModel(dm.getMedecins());
                 lmm.setVisible(true);
                 setVisible(false);
             }
