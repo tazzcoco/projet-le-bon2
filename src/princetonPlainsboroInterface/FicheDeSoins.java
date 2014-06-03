@@ -548,6 +548,8 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 //méthode ajouterFiche(FicheDeSoins fds); de DossierMedical
                 ajouterFiche();
                 repaint();
+            } else if (source == jButton6) {
+                
             }
         }
     }
@@ -589,7 +591,6 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 } else if (cb.getSelectedItem().equals("Entre deux dates")) {
                     afficherEntreDeuxDateBox();
                 }
-                
                 jTextArea1.setCaretPosition(0);
                 jTextArea1.repaint();
             }

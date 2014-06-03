@@ -452,10 +452,16 @@ public class DossierPatient extends javax.swing.JFrame {
                 mm.setVisible(true);
                 setVisible(false);
             } else if (source == jButton3) {
+                String s ="";
                 fds = new FicheDeSoins();
                 fds.setBounds(positionFenetre);
                 fds.setDM(dm);
-                fds.getJTextArea1().setText(dm.afficher());
+                for(int i =0; i < dm.getFiches().size() ; i++){
+                    if(currentPatient.equals(dm.getFiches().get(i).getPatient())){
+                        s +=dm.getFiches().get(i).afficher();
+                    }
+                }
+                fds.getJTextArea1().setText(s);
                 fds.getJTextArea1().setCaretPosition(0);
                 DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getPatients().toArray());
                 fds.getJComboBox1().setModel(cbModel);
