@@ -466,7 +466,7 @@ public class NouvelleAdmission extends javax.swing.JFrame {
                                 Object[] line = new Object[6];
                                 line[0] = dm.getFiches().get(f).getDate().afficherDate();
                                 line[1] = ((Acte) dm.getFiches().get(f).getActes().get(a)).getLibelle();
-                                line[2] = "Pas d'observations pour l'instant";
+                                line[2] = ((Acte) dm.getFiches().get(f).getActes().get(a)).getObservations();
                                 line[3] = dm.getFiches().get(f).getMedecin().toString();
                                 line[4] = ((Acte) dm.getFiches().get(f).getActes().get(a)).getCode();
                                 line[5] = dec.format(((Acte) dm.getFiches().get(f).getActes().get(a)).cout());

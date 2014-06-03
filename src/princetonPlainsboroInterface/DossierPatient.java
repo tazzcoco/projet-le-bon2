@@ -35,9 +35,7 @@ public class DossierPatient extends javax.swing.JFrame {
     private String l;
     private Medecin m;
     private Patient currentPatient;
-    private double ct;
     private String c;
-    private Acte acte;
 
     private DossierMedical dm;
 
@@ -54,9 +52,6 @@ public class DossierPatient extends javax.swing.JFrame {
         jButton8.addActionListener(dpl);
         jButton9.addActionListener(dpl);
         jButton10.addActionListener(dpl);
-        //jTable2.getSelectionModel().addListSelectionListener(new tableListSelectionListener());
-
-        //grapher2.getGP().setJTable(jTable2);
     }
 
     public DossierMedical getDM() {
@@ -75,15 +70,7 @@ public class DossierPatient extends javax.swing.JFrame {
         return jTable2;
     }
 
-    public void setValueAt(Object value, int row, int col) {
-        for (int i = 0; i < jTable2.getRowCount(); i++) {
-            // jTable2.rowData[row][col] = value;
-            //fireTableCellUpdated(row, col);   
-        }
-    }
-
     public void ajouterActeLourd() {
-
         //panel global
         JPanel panelGlobal = new JPanel();
 
@@ -166,7 +153,7 @@ public class DossierPatient extends javax.swing.JFrame {
         JTextField fieldCoef = new JTextField(4);
 
         //organisation panelGlobal
-        panelGlobal.setLayout(new GridLayout(4, 2));
+        panelGlobal.setLayout(new GridLayout(5, 2));
         panelGlobal.add(labelDate);
         panelGlobal.add(panelDate1);
         panelGlobal.add(labelLibelle);
@@ -175,28 +162,55 @@ public class DossierPatient extends javax.swing.JFrame {
         panelGlobal.add(areaObservation);
         panelGlobal.add(labelCoef);
         panelGlobal.add(fieldCoef);
+        panelGlobal.add(cb1);
 
         Acte a = null;
 
-        //instanciation de la fenêtre d'entrée utilisateur
-        int result = JOptionPane.showConfirmDialog(null, panelGlobal,
+        int result = JOptionPane.showConfirmDialog(this, panelGlobal,
                 "Veuillez saisir les informations concernant l'acte médical :", JOptionPane.OK_CANCEL_OPTION);
         Date d = null;
         d = new Date(Integer.parseInt(fieldDateDay.getText()), Integer.parseInt(fieldDateMonth.getText()), Integer.parseInt(fieldDateYear.getText()));
 
-//        for (int z = 0; z < dm.getFiches().getSize(); z++) {
-//            for (int y = 0; y < dm.getFiches().get(z).getActes().size(); y++) {
-//                ct = ((Acte) dm.getFiches().get(z).getActes().get(y)).cout();
-//            }
-//        }
         if (result == JOptionPane.OK_OPTION) {
-            if (c == "CS") {
-                a = new Acte(acte.getCodeCS(), Integer.parseInt(fieldCoef.getText()));
+            if (c.equals("CS")) {
+                a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("CSC")) {
+                a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("FP")) {
+                a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("KC")) {
+                a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("KE")) {
+                a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("K")) {
+                a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("KFA")) {
+                a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("KFB")) {
+                a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("ORT")) {
+                a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+            } else if (c.equals("PRO")) {
+                a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
             }
-            //a = new Acte(d, l, areaObservation.getText(), m, c, ct);
+
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
-                if (m.equals(dm.getFiches().get(z).getMedecin())) {
-                    dm.getFiches().get(z).ajouterActe(a);
+                if (currentPatient.equals(dm.getFiches().get(z).getPatient())) {
+                    if (m.equals(dm.getFiches().get(z).getMedecin())) {
+                        if (d.equals(dm.getFiches().get(z).getDate())) {
+                            dm.getFiches().get(z).ajouterActe(a);
+                        } else {
+                            princetonPlainsboro.FicheDeSoins f = new princetonPlainsboro.FicheDeSoins(currentPatient, m, d);
+                            f.ajouterActe(a);
+                            dm.ajouterFiche(f);
+                            break;
+                        }
+                    } else {
+                        princetonPlainsboro.FicheDeSoins f = new princetonPlainsboro.FicheDeSoins(currentPatient, m, d);
+                        f.ajouterActe(a);
+                        dm.ajouterFiche(f);
+                        break;
+                    }
                 }
             }
 
@@ -205,7 +219,7 @@ public class DossierPatient extends javax.swing.JFrame {
             line[1] = l;
             line[2] = areaObservation.getText();
             line[3] = m.toString();
-            line[4] = a.getCode();
+            line[4] = ((Acte) a).getCode();
             line[5] = dec.format((a).cout());
             ((DefaultTableModel) jTable2.getModel()).addRow(line);
             jTable2.repaint();
@@ -538,7 +552,6 @@ public class DossierPatient extends javax.swing.JFrame {
                     }
                 }
                 fds.getJTextArea1().setText(s);
-
                 fds.getJTextArea1().setCaretPosition(0);
                 DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getPatients().toArray());
                 fds.getJComboBox1().setModel(cbModel);

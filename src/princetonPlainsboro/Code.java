@@ -5,7 +5,7 @@ package princetonPlainsboro;
 // constructeur (arguments entre parentheses apres le nom de chaque valeur).
 // Par exemple, la valeur Code.FP a un attribut 'libelle' contenant la chaine
 // de caracteres "forfait pediatrique" et un attribut 'cout' ayant la valeur 5.0
-enum Code {
+public enum Code {
 
     // valeurs de l'�num :
     CS("consultation au cabinet", 23.0),

@@ -11,9 +11,9 @@ public class Acte {
     private Date date;
     private String libelle;
     private Medecin medecin;
-    private String observation;
     private double coutTotal;
     private String code2;
+    private String observations;
 
     //constructeur
     public Acte(Code code, int coef) {
@@ -21,14 +21,24 @@ public class Acte {
         this.coef = coef;
         
     }
+    public Acte(Code code, int coef,String observations) {
+        this.code = code;
+        this.coef = coef;
+        this.observations = observations;        
+    }
+    
+    public String getObservations(){
+        return observations;
+    }
+    
     public Code getCodeCS(){
-        return code.CS;
+        return Code.CS;
     }
     
     public Acte(Date date,String libelle,String observation, Medecin medecin,String code, double coutTotal){
         this.date=date;
         this.libelle=libelle;
-        this.observation=observation;
+        this.observations=observation;
         this.medecin=medecin;
         this.code2=code;
         this.coutTotal=coutTotal;
