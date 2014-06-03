@@ -224,6 +224,18 @@ public class DossierMedical {
         }//end for
         return s;
     }
+    
+    public DefaultListModel getLibelles(){
+        DefaultListModel<String> libelle = new DefaultListModel();
+        for (int i = 0; i < getFiches().size(); i++) {
+            for (int a = 0; a < getFiches().get(i).getActes().size(); a++) {
+                if (!libelle.contains(((Acte) getFiches().get(i).getActes().get(a)).getLibelle())) {
+                    libelle.addElement(((Acte) getFiches().get(i).getActes().get(a)).getLibelle());
+                }
+            }
+        }
+        return libelle;
+    }
 
     public String afficherFichesEntre(Date d1, Date d2) {
         String s = "";

@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -32,7 +33,11 @@ public class DossierPatient extends javax.swing.JFrame {
     private princetonPlainsboroInterface.FicheDeSoins fds;
     private NouvelleAdmission na;
     private String l;
+    private Medecin m;
     private Patient currentPatient;
+    private double ct;
+    private String c;
+    private Acte acte;
 
     private DossierMedical dm;
 
@@ -77,22 +82,26 @@ public class DossierPatient extends javax.swing.JFrame {
         }
     }
 
-    public void afficherEntreDeuxDateBox() {
-
-        
+    public void ajouterActeLourd() {
 
         //panel global
         JPanel panelGlobal = new JPanel();
 
-        //TextField permettant de recuperer les informations pour l'acte a créer
+        //TextField permettant de recuperer la date pour l'acte a créer
         JTextField fieldDateDay = new JTextField(3);
         JTextField fieldDateMonth = new JTextField(3);
         JTextField fieldDateYear = new JTextField(7);
 
-        //ComboBox  permettant de choisir dans la liste des libelle
+        //ComboBox  permettant de choisir dans la liste des libelles/des medecins
         final JComboBox comboLibelle;
+        final JComboBox cb1;
+        DecimalFormat dec = new DecimalFormat("0.00");
+
         DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getLibelles().toArray());
         comboLibelle = new JComboBox(cbModel);
+        DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
+        cb1 = new JComboBox(cbModel1);
+
         ActionListener cbListener = new ActionListener() {
 
             @Override
@@ -104,10 +113,38 @@ public class DossierPatient extends javax.swing.JFrame {
                             l = dm.getLibelles().get(i).toString();
                         }
                     }
+                    if (l.equals("consultation au cabinet")) {
+                        c = "CS";
+                    } else if (l.equals("consultation cardiologie")) {
+                        c = "CSC";
+                    } else if (l.equals("forfait pediatrique")) {
+                        c = "FP";
+                    } else if (l.equals("actes de chirurgie et de specialite")) {
+                        c = "KC";
+                    } else if (l.equals("actes d'echographie, de doppler")) {
+                        c = "KE";
+                    } else if (l.equals("autres actes de specialite")) {
+                        c = "K";
+                    } else if (l.equals("forfait A")) {
+                        c = "KFA";
+                    } else if (l.equals("forfait B")) {
+                        c = "KFB";
+                    } else if (l.equals("orthodontie")) {
+                        c = "ORT";
+                    } else if (l.equals("prothese dentaire")) {
+                        c = "PRO";
+                    }
+                } else if (cb == cb1) {
+                    for (int i = 0; i < dm.getMedecins().size(); i++) {
+                        if (cb.getSelectedItem().equals(dm.getMedecins().get(i))) {
+                            m = dm.getMedecins().get(i);
+                        }
+                    }
                 }
             }
         };
         comboLibelle.addActionListener(cbListener);
+        cb1.addActionListener(cbListener);
 
         //TextArea pour récupérer les observation éventuelle du medecin
         JTextArea areaObservation = new JTextArea();
@@ -117,33 +154,63 @@ public class DossierPatient extends javax.swing.JFrame {
         JLabel labelLibelle = new JLabel("Nom de l'acte :");
         JLabel labelObservation = new JLabel("Observation éventuelle :");
 
-        //création d'un panel pour les 3 JTextField de la première date
+        //création d'un panel pour les 3 JTextField de la date
         JPanel panelDate1 = new JPanel();
         panelDate1.setLayout(new FlowLayout());
         panelDate1.add(fieldDateDay);
         panelDate1.add(fieldDateMonth);
         panelDate1.add(fieldDateYear);
 
+        //JLabel et JTextField
+        JLabel labelCoef = new JLabel("Coefficient : ");
+        JTextField fieldCoef = new JTextField(4);
+
         //organisation panelGlobal
-        panelGlobal.setLayout(new GridLayout(3, 2));
+        panelGlobal.setLayout(new GridLayout(4, 2));
         panelGlobal.add(labelDate);
         panelGlobal.add(panelDate1);
         panelGlobal.add(labelLibelle);
         panelGlobal.add(comboLibelle);
         panelGlobal.add(labelObservation);
         panelGlobal.add(areaObservation);
+        panelGlobal.add(labelCoef);
+        panelGlobal.add(fieldCoef);
 
-        
-            //instanciation de la fenêtre d'entrée utilisateur
-            int result = JOptionPane.showConfirmDialog(null, panelGlobal,
-                    "Veuillez saisir les informations concernant l'acte médical :", JOptionPane.OK_CANCEL_OPTION);
-            Date d = null;
-            d  = new Date(Integer.parseInt(fieldDateDay.getText()), Integer.parseInt(fieldDateMonth.getText()), Integer.parseInt(fieldDateYear.getText()));
-            Acte a = null;
-            //a  = new Acte(d,l,areaObservation.getText());
-                    }
-        
+        Acte a = null;
 
+        //instanciation de la fenêtre d'entrée utilisateur
+        int result = JOptionPane.showConfirmDialog(null, panelGlobal,
+                "Veuillez saisir les informations concernant l'acte médical :", JOptionPane.OK_CANCEL_OPTION);
+        Date d = null;
+        d = new Date(Integer.parseInt(fieldDateDay.getText()), Integer.parseInt(fieldDateMonth.getText()), Integer.parseInt(fieldDateYear.getText()));
+
+//        for (int z = 0; z < dm.getFiches().getSize(); z++) {
+//            for (int y = 0; y < dm.getFiches().get(z).getActes().size(); y++) {
+//                ct = ((Acte) dm.getFiches().get(z).getActes().get(y)).cout();
+//            }
+//        }
+        if (result == JOptionPane.OK_OPTION) {
+            if (c == "CS") {
+                a = new Acte(acte.getCodeCS(), Integer.parseInt(fieldCoef.getText()));
+            }
+            //a = new Acte(d, l, areaObservation.getText(), m, c, ct);
+            for (int z = 0; z < dm.getFiches().getSize(); z++) {
+                if (m.equals(dm.getFiches().get(z).getMedecin())) {
+                    dm.getFiches().get(z).ajouterActe(a);
+                }
+            }
+
+            Object[] line = new Object[6];
+            line[0] = d.afficherDate();
+            line[1] = l;
+            line[2] = areaObservation.getText();
+            line[3] = m.toString();
+            line[4] = a.getCode();
+            line[5] = dec.format((a).cout());
+            ((DefaultTableModel) jTable2.getModel()).addRow(line);
+            jTable2.repaint();
+        }
+    }
 
     public void setCurrentPatient(Patient currentPatient) {
         this.currentPatient = currentPatient;
@@ -461,10 +528,17 @@ public class DossierPatient extends javax.swing.JFrame {
                 mm.setVisible(true);
                 setVisible(false);
             } else if (source == jButton3) {
+                String s = "";
                 fds = new FicheDeSoins();
                 fds.setBounds(positionFenetre);
                 fds.setDM(dm);
-                fds.getJTextArea1().setText(dm.afficher());
+                for (int i = 0; i < dm.getFiches().size(); i++) {
+                    if (currentPatient.equals(dm.getFiches().get(i).getPatient())) {
+                        s += dm.getFiches().get(i).afficher();
+                    }
+                }
+                fds.getJTextArea1().setText(s);
+
                 fds.getJTextArea1().setCaretPosition(0);
                 DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getPatients().toArray());
                 fds.getJComboBox1().setModel(cbModel);
@@ -505,9 +579,7 @@ public class DossierPatient extends javax.swing.JFrame {
                 lmm.setVisible(true);
                 setVisible(false);
             } else if (source == jButton10) {
-                //méthode ajouterActe(Acte a); ajouterActe(Code code, int coefficient); de FicheDeSoins 
-                //((DefaultTableModel) jTable2.getModel()).addRow(new Object[]{date.afficherDate(), acte.getCode(). });
-                //fenêtre de confirmation à ajouter "Acte ajouté"
+                ajouterActeLourd();
                 repaint();
             }
         }

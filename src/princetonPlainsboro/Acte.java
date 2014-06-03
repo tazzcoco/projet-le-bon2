@@ -13,14 +13,28 @@ public class Acte {
     private Medecin medecin;
     private String observation;
     private double coutTotal;
+    private String code2;
 
     //constructeur
     public Acte(Code code, int coef) {
         this.code = code;
         this.coef = coef;
+        
+    }
+    public Code getCodeCS(){
+        return code.CS;
     }
     
-//    public Acte(Date date,String libelle,String observation, Medecin medecin,Code code, double coutTotal){
+    public Acte(Date date,String libelle,String observation, Medecin medecin,String code, double coutTotal){
+        this.date=date;
+        this.libelle=libelle;
+        this.observation=observation;
+        this.medecin=medecin;
+        this.code2=code;
+        this.coutTotal=coutTotal;
+    }
+
+//    public Acte(Date date, String libelle, String observation, Medecin medecin, Code code, double coutTotal) {
 //        this.date=date;
 //        this.libelle=libelle;
 //        this.observation=observation;
@@ -28,15 +42,6 @@ public class Acte {
 //        this.code=code;
 //        this.coutTotal=coutTotal;
 //    }
-
-    public Acte(Date date, String libelle, String observation, Medecin medecin, Code code, double coutTotal) {
-        this.date=date;
-        this.libelle=libelle;
-        this.observation=observation;
-        this.medecin=medecin;
-        this.code=code;
-        this.coutTotal=coutTotal;
-    }
 
     @Override
     public String toString() {
