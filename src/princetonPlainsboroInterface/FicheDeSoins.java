@@ -456,22 +456,23 @@ public class FicheDeSoins extends javax.swing.JFrame {
                 }
                 jTextArea1.setText(s);
                 jTextArea1.repaint();
-            }else if (cb == jComboBox2){
-                for (int i = 0; i < dm.getFiches().size(); i++) {
-                    if (cb.getSelectedItem().equals("Sans tri")){
-                        
-                    }else if(cb.getSelectedItem().equals("Dates croissantes")){
-                        s+= dm.trierDates();
-                    }else if(cb.getSelectedItem().equals("Coûts croissants")){
-                        
-                    }else if(cb.getSelectedItem().equals("Entre deux dates")){
-                        
-                    }
-                }
-                jTextArea1.setText(s);
-                jTextArea1.repaint();
-            }
+            } else if (cb == jComboBox2) {
 
+                if (cb.getSelectedItem().equals("Sans tri")) {
+
+                } else if (cb.getSelectedItem().equals("Dates croissantes")) {
+                    s += dm.trierDates();
+                } else if (cb.getSelectedItem().equals("Coûts croissants")) {
+                    s += dm.afficherListeCoutCroissant();
+                } else if (cb.getSelectedItem().equals("Entre deux dates")) {
+
+                }
+            
+            jTextArea1.setText(s);
+            jTextArea1.setCaretPosition(0);
+            jTextArea1.repaint();
         }
+
     }
+}
 }
