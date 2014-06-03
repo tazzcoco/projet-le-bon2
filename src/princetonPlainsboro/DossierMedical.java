@@ -162,9 +162,10 @@ public class DossierMedical {
     }
 
     // tri generique :
-    public void trier(ComparaisonFiches c) {
+    public String trier(ComparaisonFiches c) {
+        String s = "";
         List<FicheDeSoins> copieFiches = new ArrayList<FicheDeSoins>();
-        System.out.println("Liste des fiches de soins par coûts croissants :");
+        s += "Liste des fiches de soins par coûts croissants :";
         //on remplit copieFiches avec les éléments de la DefaultListModel fiches
         for (int i = 0; i < fiches.size(); i++) {
             copieFiches.add(fiches.get(i));
@@ -182,42 +183,48 @@ public class DossierMedical {
                 }
             }
             // on affiche la fiche de soins trouvee :
-            System.out.println(f1.afficher());
+            s += f1.afficher();
             //on la supprime de la liste :
             copieFiches.remove(imin);
         }
+        return s;
     }
 
-    public void afficherListePatients() {
+    public String afficherListePatients() {
+        String s = "";
         //on créé une liste de patient
         ArrayList<Patient> lp = new ArrayList<>();
-        System.out.println("\nListe des patients :");
+        s += "\nListe des patients :";
         //on la remplit et on affiche chaque patient sous la forme : NOM Prenom
         for (int i = 0; i < fiches.size(); i++) {
             if (!lp.contains(fiches.get(i).getPatient())) {
                 lp.add(fiches.get(i).getPatient());
-                System.out.println(fiches.get(i).getPatient().getNom().toUpperCase() + " " + fiches.get(i).getPatient().getPrenom());
+                s += fiches.get(i).getPatient().getNom().toUpperCase() + " " + fiches.get(i).getPatient().getPrenom();
             }//end if
         }//end for
+        return s;
     }
 
-    public void afficherListeMedecins() {
+    public String afficherListeMedecins() {
+        String s = "";
         //même principe que pour afficherListePatients, on créé une liste de médecins en premier
         ArrayList<Medecin> lm = new ArrayList<Medecin>();
-        System.out.println("\nListe des médecins :");
+        s += "\nListe des médecins :";
         //on la remplit et on affiche chaque médecin sous la forme : NOM Prenom
         for (int i = 0; i < fiches.size(); i++) {
             if (!lm.contains(fiches.get(i).getMedecin())) {
                 lm.add(fiches.get(i).getMedecin());
-                System.out.println(fiches.get(i).getMedecin().getNom().toUpperCase() + " " + fiches.get(i).getMedecin().getPrenom());
+                s += fiches.get(i).getMedecin().getNom().toUpperCase() + " " + fiches.get(i).getMedecin().getPrenom();
             }//end if
         }//end for
+        return s;
     }
 
-    public void afficherFichesEntre(Date d1, Date d2) {
+    public String afficherFichesEntre(Date d1, Date d2) {
+        String s = "";
         //creation d'une liste de fiche de soins dont les dates sont comprises entre d1 et d2
         List<FicheDeSoins> lf = new ArrayList<FicheDeSoins>();
-        System.out.println("Liste des fiches de soins entre le " + d1 + " et le " + d2 + " : \n");
+        s += "Liste des fiches de soins entre le " + d1 + " et le " + d2 + " : \n";
         //on remplit la liste lf
         for (int i = 0; i < fiches.size(); i++) {
             if (d1.compareTo(d2) < 0) {
@@ -245,15 +252,17 @@ public class DossierMedical {
                 }//end if
             }//end for
             // on affiche la fiche de soins trouvee :
-            System.out.println(f1.afficher());
-            System.out.println("------------------------");
+            s += f1.afficher();
+            s += "------------------------";
             //on la supprime de la liste :
             lf.remove(imin);
         }
+        return s;
     }
 
-    public void afficherListeCoutCroissant() {
-        trier(new ComparaisonFichesCouts());
+    public String afficherListeCoutCroissant() {
+        String s = trier(new ComparaisonFichesCouts());
+        return s;
     }
 
     public void ajouterPatient(Patient p) {
