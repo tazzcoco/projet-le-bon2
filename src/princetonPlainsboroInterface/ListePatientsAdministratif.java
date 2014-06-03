@@ -256,6 +256,7 @@ public class ListePatientsAdministratif extends javax.swing.JFrame {
     public JComboBox getJComboBox1() {
         return jComboBox1;
     }
+    
     public javax.swing.JList getjList2() {
         return jList2;
     }
