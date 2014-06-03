@@ -395,6 +395,55 @@ public class FicheDeSoins extends javax.swing.JFrame {
         jTextArea1.setText(dm.afficher());
     }
 
+    public void afficherEntreDeuxDateBox() {
+        //panel global
+        JPanel panelGlobal = new JPanel();
+
+        //TextField permettant de recuperer les deux dates d1 et d2
+        JTextField fieldPremiereDateDay = new JTextField(3);
+        JTextField fieldPremiereDateMonth = new JTextField(3);
+        JTextField fieldPremiereDateYear = new JTextField(7);
+        JTextField fieldDeuxiemeDateDay = new JTextField(3);
+        JTextField fieldDeuxiemeDateMonth = new JTextField(3);
+        JTextField fieldDeuxiemeDateYear = new JTextField(7);
+
+        //création des JLabels
+        JLabel labelDate1 = new JLabel("Première date :");
+        JLabel labelDate2 = new JLabel("Deuxième date :");
+
+        //création d'un panel pour les 3 JTextField de la première date
+        JPanel panelDate1 = new JPanel();
+        panelDate1.setLayout(new FlowLayout());
+        panelDate1.add(fieldPremiereDateDay);
+        panelDate1.add(fieldPremiereDateMonth);
+        panelDate1.add(fieldPremiereDateYear);
+
+        //création d'un panel pour les 3 JTextField de la deuxième date
+        JPanel panelDate2 = new JPanel();
+        panelDate2.setLayout(new FlowLayout());
+        panelDate2.add(fieldDeuxiemeDateDay);
+        panelDate2.add(fieldDeuxiemeDateMonth);
+        panelDate2.add(fieldDeuxiemeDateYear);
+
+        //organisation panelGlobal
+        panelGlobal.setLayout(new GridLayout(4, 1));
+        panelGlobal.add(labelDate1);
+        panelGlobal.add(panelDate1);
+        panelGlobal.add(labelDate2);
+        panelGlobal.add(panelDate2);
+
+        //instanciation de la fenêtre d'entrée utilisateur
+        int result = JOptionPane.showConfirmDialog(null, panelGlobal,
+                "Veuillez choisir les deux dates :", JOptionPane.OK_CANCEL_OPTION);
+        Date d1 = null;
+        Date d2 = null;
+        d1 = new Date(Integer.parseInt(fieldPremiereDateDay.getText()), Integer.parseInt(fieldPremiereDateMonth.getText()), Integer.parseInt(fieldPremiereDateYear.getText()));
+        d2 = new Date(Integer.parseInt(fieldDeuxiemeDateDay.getText()), Integer.parseInt(fieldDeuxiemeDateMonth.getText()), Integer.parseInt(fieldDeuxiemeDateYear.getText()));
+        if (result == JOptionPane.OK_OPTION) {
+            jTextArea1.setText(dm.afficherFichesEntre(d1, d2));
+        }
+    }
+
     public class FicheDeSoinsListener implements ActionListener {
 
         @Override
@@ -448,6 +497,7 @@ public class FicheDeSoins extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             String s = "";
             JComboBox cb = (JComboBox) e.getSource();
+            Rectangle positionFenetre = getBounds();
             if (cb == jComboBox1) {
                 for (int i = 0; i < dm.getFiches().size(); i++) {
                     if (cb.getSelectedItem().equals(dm.getFiches().get(i).getPatient())) {
@@ -459,20 +509,31 @@ public class FicheDeSoins extends javax.swing.JFrame {
             } else if (cb == jComboBox2) {
 
                 if (cb.getSelectedItem().equals("Sans tri")) {
-
+                    fds = new FicheDeSoins();
+                    fds.setBounds(positionFenetre);
+                    fds.setDM(dm);
+                    fds.getJTextArea1().setText(dm.afficher());
+                    fds.getJTextArea1().setCaretPosition(0);
+                    DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getPatients().toArray());
+                    fds.getJComboBox1().setModel(cbModel);
+                    fds.setVisible(true);
+                    setVisible(false);
                 } else if (cb.getSelectedItem().equals("Dates croissantes")) {
                     s += dm.trierDates();
+                    jTextArea1.setText(s);
+
                 } else if (cb.getSelectedItem().equals("Coûts croissants")) {
                     s += dm.afficherListeCoutCroissant();
+                    jTextArea1.setText(s);
+
                 } else if (cb.getSelectedItem().equals("Entre deux dates")) {
-
+                    afficherEntreDeuxDateBox();
                 }
-            
-            jTextArea1.setText(s);
-            jTextArea1.setCaretPosition(0);
-            jTextArea1.repaint();
-        }
 
+                jTextArea1.setCaretPosition(0);
+                jTextArea1.repaint();
+            }
+
+        }
     }
-}
 }
