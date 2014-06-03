@@ -11,6 +11,8 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +32,7 @@ public class DossierPatient extends javax.swing.JFrame {
     private princetonPlainsboroInterface.FicheDeSoins fds;
     private NouvelleAdmission na;
     private Patient currentPatient;
-    
+
     private DossierMedical dm;
 
     public DossierPatient() {
@@ -50,7 +52,7 @@ public class DossierPatient extends javax.swing.JFrame {
 
         //grapher2.getGP().setJTable(jTable2);
     }
-    
+
     public DossierMedical getDM() {
         return dm;
     }
@@ -58,27 +60,90 @@ public class DossierPatient extends javax.swing.JFrame {
     public void setDM(DossierMedical dm) {
         this.dm = dm;
     }
+
     public void setJTable2(JTable jTable2) {
         this.jTable2 = jTable2;
     }
-    
-    public JTable getJTable2(){
+
+    public JTable getJTable2() {
         return jTable2;
     }
-    
+
     public void setValueAt(Object value, int row, int col) {
-        for (int i =0; i< jTable2.getRowCount();i++){
+        for (int i = 0; i < jTable2.getRowCount(); i++) {
         // jTable2.rowData[row][col] = value;
-        //fireTableCellUpdated(row, col);   
+            //fireTableCellUpdated(row, col);   
         }
     }
-    
-    public void setCurrentPatient(Patient currentPatient){
+
+    public void afficherEntreDeuxDateBox() {
+
+        DefaultListModel libelle = new DefaultListModel();
+        for (int i = 0; i < dm.getFiches().size(); i++) {
+            for (int a = 0; a < dm.getFiches().get(i).getActes().size(); a++) {
+                if (!libelle.contains(((Acte) dm.getFiches().get(i).getActes().get(a)).getLibelle())) {
+                    libelle.addElement(((Acte) dm.getFiches().get(i).getActes().get(a)).getLibelle());
+                }
+            }
+        }
+        
+        //panel global
+        JPanel panelGlobal = new JPanel();
+
+        //TextField permettant de recuperer les informations pour l'acte a créer
+        JTextField fieldDateDay = new JTextField(3);
+        JTextField fieldDateMonth = new JTextField(3);
+        JTextField fieldDateYear = new JTextField(7);
+
+        //ComboBox  permettant de choisir dans la liste des libelle
+        JComboBox comboLibelle;
+        DefaultComboBoxModel cbModel = new DefaultComboBoxModel(libelle.toArray());
+        comboLibelle= new JComboBox(cbModel);
+        
+        //TextArea pour récupérer les observation éventuelle du medecin
+        JTextArea areaObservation = new JTextArea();
+
+        //création des JLabels
+        JLabel labelDate = new JLabel("Date de l'Acte :");
+        JLabel labelLibelle = new JLabel("Nom de l'acte :");
+        JLabel labelObservation = new JLabel("Observation éventuelle :");
+
+        //création d'un panel pour les 3 JTextField de la première date
+        JPanel panelDate1 = new JPanel();
+        panelDate1.setLayout(new FlowLayout());
+        panelDate1.add(fieldDateDay);
+        panelDate1.add(fieldDateMonth);
+        panelDate1.add(fieldDateYear);
+
+        //organisation panelGlobal
+        panelGlobal.setLayout(new GridLayout(3, 2));
+        panelGlobal.add(labelDate);
+        panelGlobal.add(panelDate1);
+        panelGlobal.add(labelLibelle);
+        panelGlobal.add(comboLibelle);
+        panelGlobal.add(labelObservation);
+        panelGlobal.add(areaObservation);
+
+        //instanciation de la fenêtre d'entrée utilisateur
+        int result = JOptionPane.showConfirmDialog(null, panelGlobal,
+                "Veuillez saisir les informations concernant l'acte médical :", JOptionPane.OK_CANCEL_OPTION);
+        Date d = null;
+        Date d2 = null;
+        d = new Date(Integer.parseInt(fieldDateDay.getText()), Integer.parseInt(fieldDateMonth.getText()), Integer.parseInt(fieldDateYear.getText()));
+        
+        //if (result == JOptionPane.OK_OPTION) {
+        //    jTextArea1.setText(dm.afficherFichesEntre(d1, d2));
+        //}
+    }
+
+    public void setCurrentPatient(Patient currentPatient) {
         this.currentPatient = currentPatient;
     }
-    public JTextArea getJTextArea2(){
+
+    public JTextArea getJTextArea2() {
         return jTextArea2;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -364,7 +429,6 @@ public class DossierPatient extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
-    
     public class DossierPatientListener implements ActionListener {
 
         @Override
@@ -441,14 +505,14 @@ public class DossierPatient extends javax.swing.JFrame {
     }
     /*public class tableListSelectionListener implements ListSelectionListener {
 
-        @Override
-        public void valueChanged(ListSelectionEvent lse) {
-            int[] rows = jTable2.getSelectedRows();
-            if (rows.length > 1) {
-                grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[1]);
-            } else if (rows.length > 0) {
-                grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[0]);
-            }
-        }
-    }*/
+     @Override
+     public void valueChanged(ListSelectionEvent lse) {
+     int[] rows = jTable2.getSelectedRows();
+     if (rows.length > 1) {
+     grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[1]);
+     } else if (rows.length > 0) {
+     grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[0]);
+     }
+     }
+     }*/
 }

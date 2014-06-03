@@ -46,6 +46,11 @@ public class FicheDeSoins {
         actes.addElement(acte);
     }
     
+    public void ajouterActe(Date date,String libelle,String observation, Medecin medecin,Code code, double coutTotal){
+        Acte acte = new Acte(date, libelle, observation, medecin, code, coutTotal);
+        actes.addElement(acte);
+    }
+    
     public void supprimerActe(Acte acte){
         actes.removeElement(acte); 
     }
