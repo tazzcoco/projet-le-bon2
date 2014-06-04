@@ -57,7 +57,7 @@ public class Acte {
 
     @Override
     public String toString() {
-        return "date :" + date +"   type d'acte :"+type+ "   observation éventuelles :"+observations +"   medecin :"+medecin+ "   code :"+ code + "   coef :"+coef + "   coût total :"+coutTotal;
+        return "date :" + date +"\n\ttype d'acte :"+type+ "\n\tobservations éventuelles :"+observations +"\n\tmédecin :"+medecin+ "\n\tcode :"+ code + "\n\tcoef :"+coef + "\n\tcoût total :"+coutTotal+"euros";
         
     }
 
