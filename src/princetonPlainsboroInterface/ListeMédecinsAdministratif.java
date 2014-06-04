@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
     private ListeMédecinsAdministratif lma;
     private ListePatientsAdministratif lpa;
     private MenuAdministratif ma;
+    private CoutAdministratif ca;
     private DossierMédecinAdministratif dma;
     private DossierMedical dm;
     private ComboBoxListener cbl;
@@ -49,6 +51,7 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
         jButton2.addActionListener(lmal);
         jButton3.addActionListener(lmal);
         jButton4.addActionListener(lmal);
+        jButton5.addActionListener(lmal);
         jTextField3.addActionListener(tfl);
         jComboBox1.addActionListener(cbl);
         listSelectionModel = jList2.getSelectionModel();
@@ -327,12 +330,37 @@ public class ListeMédecinsAdministratif extends javax.swing.JFrame {
                 lma.getJList2().setModel(dm.getMedecins());
                 lma.setVisible(true);
                 setVisible(false);
-            }else if (source == jButton4) {
+            } else if (source == jButton4) {
                 lma = new ListeMédecinsAdministratif();
                 lma.setBounds(positionFenetre);
                 lma.setDM(dm);
                 lma.getJList2().setModel(dm.getMedecins());
                 lma.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton5){
+                DefaultListModel<String> specialites = new DefaultListModel();
+                for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    if (!specialites.contains(dm.getMedecins().get(i).getSpecialite())) {
+                        specialites.addElement(dm.getMedecins().get(i).getSpecialite());
+                    }
+                }
+                ca = new CoutAdministratif();
+                ca.setBounds(positionFenetre);
+                ca.setDM(dm);
+                DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel3 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel4 = new DefaultComboBoxModel(dm.getMedecins().toArray());
+                DefaultComboBoxModel cbModel5 = new DefaultComboBoxModel(specialites.toArray());
+                ca.getjComboBox1().setModel(cbModel1);
+                ca.getjComboBox4().setModel(cbModel2);
+                ca.getjComboBox8().setModel(cbModel3);
+                ca.getjComboBox9().setModel(cbModel4);
+                ca.getjComboBox7().setModel(cbModel5);
+                ca.getjComboBox7().setSelectedItem(specialites.get(0));
+                ca.getjComboBox8().setSelectedItem(dm.getPatients().get(0));
+                ca.getjComboBox9().setSelectedItem(dm.getMedecins().get(0));
+                ca.setVisible(true);
                 setVisible(false);
             }
         }

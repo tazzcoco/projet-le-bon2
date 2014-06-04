@@ -3,8 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package princetonPlainsboroInterface;
+
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.DecimalFormat;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import princetonPlainsboro.*;
 
 /**
  *
@@ -12,11 +23,55 @@ package princetonPlainsboroInterface;
  */
 public class CoutAdministratif extends javax.swing.JFrame {
 
+    private Patient p1; //patient selectionné dans le cout d'un acte
+    private Patient p2; //patient selectionné dans le cout d'une fiche de soins
+    private Patient p4; //patient selectionné dans le cout d'un patient
+    private Medecin m1; //medecin selectionné dans le cout d'un acte
+    private Medecin m2; //medecin selectionné dans le cout d'une fiche de soins
+    private Medecin m5; //medecin selectionné dans le cout d'un medecin
+    private Object d2;    //date selectionnée dans le cout d'une fiche de soins
+    private String nomActe1; //nom de l'acte selectionné dans le cout d'un acte
+    private String specialite3; //spécialité selectionnée dans le cout d'une spécialité
+    private DossierMedical dm;
+    private ComboBoxListener cbl;
+    private CoutAdministratifListener cal;
+    private DecimalFormat dec;
+
+    private MenuAdministratif ma;
+    private ListePatientsAdministratif lpa;
+    private ListeMédecinsAdministratif lma;
+    private CoutAdministratif ca;
+
     /**
      * Creates new form CoutAdministratif
      */
     public CoutAdministratif() {
         initComponents();
+        dec = new DecimalFormat("0.00");
+        cbl = new ComboBoxListener();
+        cal = new CoutAdministratifListener();
+        jComboBox1.addActionListener(cbl);
+        jComboBox2.addActionListener(cbl);
+        jComboBox3.addActionListener(cbl);
+        jComboBox4.addActionListener(cbl);
+        jComboBox5.addActionListener(cbl);
+        jComboBox6.addActionListener(cbl);
+        jComboBox7.addActionListener(cbl);
+        jComboBox8.addActionListener(cbl);
+        jComboBox9.addActionListener(cbl);
+        jButton5.addActionListener(cal);
+        jButton6.addActionListener(cal);
+        jButton7.addActionListener(cal);
+        jButton8.addActionListener(cal);
+        jButton9.addActionListener(cal);
+    }
+
+    public DossierMedical getDM() {
+        return dm;
+    }
+
+    public void setDM(DossierMedical dm) {
+        this.dm = dm;
     }
 
     /**
@@ -428,7 +483,7 @@ public class CoutAdministratif extends javax.swing.JFrame {
                         .addComponent(jButton9)
                         .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel2);
@@ -441,7 +496,7 @@ public class CoutAdministratif extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, Short.MAX_VALUE)
         );
 
         pack();
@@ -530,4 +585,223 @@ public class CoutAdministratif extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the jComboBox1
+     */
+    public javax.swing.JComboBox getjComboBox1() {
+        return jComboBox1;
+    }
+
+    /**
+     * @return the jComboBox2
+     */
+    public javax.swing.JComboBox getjComboBox2() {
+        return jComboBox2;
+    }
+
+    /**
+     * @return the jComboBox3
+     */
+    public javax.swing.JComboBox getjComboBox3() {
+        return jComboBox3;
+    }
+
+    /**
+     * @return the jComboBox4
+     */
+    public javax.swing.JComboBox getjComboBox4() {
+        return jComboBox4;
+    }
+
+    /**
+     * @return the jComboBox5
+     */
+    public javax.swing.JComboBox getjComboBox5() {
+        return jComboBox5;
+    }
+
+    /**
+     * @return the jComboBox6
+     */
+    public javax.swing.JComboBox getjComboBox6() {
+        return jComboBox6;
+    }
+
+    /**
+     * @return the jComboBox7
+     */
+    public javax.swing.JComboBox getjComboBox7() {
+        return jComboBox7;
+    }
+
+    /**
+     * @return the jComboBox8
+     */
+    public javax.swing.JComboBox getjComboBox8() {
+        return jComboBox8;
+    }
+
+    /**
+     * @return the jComboBox9
+     */
+    public javax.swing.JComboBox getjComboBox9() {
+        return jComboBox9;
+    }
+
+    public class ComboBoxListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JComboBox cb = (JComboBox) e.getSource();
+            if (cb == jComboBox1) {
+                for (int i = 0; i < dm.getPatients().size(); i++) {
+                    if (cb.getSelectedItem().equals(dm.getPatients().get(i))) {
+                        p1 = dm.getPatients().get(i);
+                    }
+                }
+                jComboBox2.removeAllItems();
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if (p1.equals(dm.getFiches().get(j).getPatient())) {
+                        jComboBox2.addItem(dm.getFiches().get(j).getMedecin().toString());
+                    }
+                }
+            } else if (cb == jComboBox2) {
+                for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    if (jComboBox2.getItemCount() != 0) {
+                        if (cb.getSelectedItem().equals(dm.getMedecins().get(i).toString())) {
+                            m1 = dm.getMedecins().get(i);
+                        }
+                    }
+                }
+                jComboBox3.removeAllItems();
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if ((m1.equals(dm.getFiches().get(j).getMedecin())) && (p1.equals(dm.getFiches().get(j).getPatient()))) {
+                        for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
+                            jComboBox3.addItem(dm.getFiches().get(j).getDate().afficherDate() + " : " + dm.getFiches().get(j).getActes().get(a).toString());
+                        }
+                    }
+                }
+            } else if (cb == jComboBox3) {
+                nomActe1 = (String) cb.getSelectedItem();
+            } else if (cb == jComboBox4) {
+                for (int i = 0; i < dm.getPatients().size(); i++) {
+                    if (cb.getSelectedItem().equals(dm.getPatients().get(i))) {
+                        p2 = dm.getPatients().get(i);
+                    }
+                }
+                jComboBox5.removeAllItems();
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if (p2.equals(dm.getFiches().get(j).getPatient())) {
+                        jComboBox5.addItem(dm.getFiches().get(j).getMedecin().toString());
+                    }
+                }
+            } else if (cb == jComboBox5) {
+                for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    if (jComboBox5.getItemCount() != 0) {
+                        if (cb.getSelectedItem().equals(dm.getMedecins().get(i).toString())) {
+                            m2 = dm.getMedecins().get(i);
+                        }
+                    }
+                }
+                jComboBox6.removeAllItems();
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if ((m2.equals(dm.getFiches().get(j).getMedecin())) && (p2.equals(dm.getFiches().get(j).getPatient()))) {
+                        jComboBox6.addItem(dm.getFiches().get(j).getDate().afficherDate());
+                    }
+                }
+            } else if (cb == jComboBox6) {
+                d2 = cb.getSelectedItem();
+            } else if (cb == jComboBox7) {
+                specialite3 = (String) cb.getSelectedItem();
+            } else if (cb == jComboBox8) {
+                p4 = (Patient) cb.getSelectedItem();
+            } else if (cb == jComboBox9) {
+                m5 = (Medecin) cb.getSelectedItem();
+            }
+        }
+    }
+
+    public class CoutAdministratifListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            Rectangle positionFenetre = getBounds();
+            
+            if (source == jButton1) {
+                ma = new MenuAdministratif();
+                ma.setBounds(positionFenetre);
+                ma.setDM(dm);
+                ma.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton2) {                
+                lpa = new ListePatientsAdministratif();
+                lpa.setBounds(positionFenetre);
+                lpa.setDM(dm);
+                lpa.getjList2().setModel(dm.getPatients());
+                lpa.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton3) {
+                lma = new ListeMédecinsAdministratif();
+                lma.setBounds(positionFenetre);
+                lma.setDM(dm);
+                lma.getJList2().setModel(dm.getMedecins());
+                lma.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton4) {
+                DefaultListModel<String> specialites = new DefaultListModel();
+                for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    if (!specialites.contains(dm.getMedecins().get(i).getSpecialite())) {
+                        specialites.addElement(dm.getMedecins().get(i).getSpecialite());
+                    }
+                }
+                ca = new CoutAdministratif();
+                ca.setBounds(positionFenetre);
+                ca.setDM(dm);
+                DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel3 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel4 = new DefaultComboBoxModel(dm.getMedecins().toArray());
+                DefaultComboBoxModel cbModel5 = new DefaultComboBoxModel(specialites.toArray());
+                ca.getjComboBox1().setModel(cbModel1);
+                ca.getjComboBox4().setModel(cbModel2);
+                ca.getjComboBox8().setModel(cbModel3);
+                ca.getjComboBox9().setModel(cbModel4);
+                ca.getjComboBox7().setModel(cbModel5);
+                ca.getjComboBox7().setSelectedItem(specialites.get(0));
+                ca.getjComboBox8().setSelectedItem(dm.getPatients().get(0));
+                ca.getjComboBox9().setSelectedItem(dm.getMedecins().get(0));
+                ca.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton5) {
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if ((m1.equals(dm.getFiches().get(j).getMedecin())) && (p1.equals(dm.getFiches().get(j).getPatient()))) {
+                        for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
+                            if (nomActe1.equals(dm.getFiches().get(j).getDate().afficherDate() + " : " + dm.getFiches().get(j).getActes().get(a).toString())) {
+                                jTextField7.setText(dec.format(((Acte) dm.getFiches().get(j).getActes().get(a)).cout()) + " €");
+                            }
+                        }
+                    }
+                }
+            } else if (source == jButton6) {
+                for (int j = 0; j < dm.getFiches().size(); j++) {
+                    if ((m2.equals(dm.getFiches().get(j).getMedecin())) && (p2.equals(dm.getFiches().get(j).getPatient()))) {
+                        for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
+                            if (d2.equals(dm.getFiches().get(j).getDate().afficherDate())) {
+                                jTextField8.setText(dec.format(dm.getFiches().get(j).coutTotal()) + " €");
+                            }
+                        }
+                    }
+                }
+            } else if (source == jButton7) {
+                jTextField9.setText(dec.format(dm.coutSpecialite(specialite3)));
+            } else if (source == jButton8) {
+                jTextField10.setText(dec.format(dm.coutPatient(p4)));
+            } else if (source == jButton9) {
+                jTextField11.setText(dec.format(dm.coutMedecin(m5)));
+            }
+        }
+
+    }
 }

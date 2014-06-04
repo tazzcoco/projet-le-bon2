@@ -242,7 +242,7 @@ public class DossierPatient extends javax.swing.JFrame {
         for (int j = 0; j < dm.getFiches().size(); j++) {
             if (currentPatient.equals(dm.getFiches().get(j).getPatient())) {
                 for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
-                    actes.addElement(dm.getFiches().get(j).getDate().afficherDate()+" :"+dm.getFiches().get(j).getActes().get(a).toString());
+                    actes.addElement(dm.getFiches().get(j).getDate().afficherDate()+" : "+dm.getFiches().get(j).getActes().get(a).toString());
                 }
             }
         }

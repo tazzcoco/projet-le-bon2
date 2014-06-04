@@ -3,6 +3,8 @@ package princetonPlainsboroInterface;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
 import princetonPlainsboro.*;
 
@@ -13,12 +15,14 @@ public class DossierMédecinAdministratif extends javax.swing.JFrame {
     private MenuAdministratif ma;
     private ListePatientsAdministratif lpa;
     private ListeMédecinsAdministratif lma;
+    private CoutAdministratif ca;
 
     public DossierMédecinAdministratif() {
         initComponents();
         setLocationRelativeTo(getParent());
         dmal = new DossierMédecinAdministratifListener();
         jButton1.addActionListener(dmal);
+        jButton2.addActionListener(dmal);
         jButton3.addActionListener(dmal);
         jButton4.addActionListener(dmal);
     }
@@ -238,6 +242,31 @@ public class DossierMédecinAdministratif extends javax.swing.JFrame {
                 lma.setDM(dm);
                 lma.getJList2().setModel(dm.getMedecins());
                 lma.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton2) {
+                DefaultListModel<String> specialites = new DefaultListModel();
+                for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    if (!specialites.contains(dm.getMedecins().get(i).getSpecialite())) {
+                        specialites.addElement(dm.getMedecins().get(i).getSpecialite());
+                    }
+                }
+                ca = new CoutAdministratif();
+                ca.setBounds(positionFenetre);
+                ca.setDM(dm);
+                DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel3 = new DefaultComboBoxModel(dm.getPatients().toArray());
+                DefaultComboBoxModel cbModel4 = new DefaultComboBoxModel(dm.getMedecins().toArray());
+                DefaultComboBoxModel cbModel5 = new DefaultComboBoxModel(specialites.toArray());
+                ca.getjComboBox1().setModel(cbModel1);
+                ca.getjComboBox4().setModel(cbModel2);
+                ca.getjComboBox8().setModel(cbModel3);
+                ca.getjComboBox9().setModel(cbModel4);
+                ca.getjComboBox7().setModel(cbModel5);
+                ca.getjComboBox7().setSelectedItem(specialites.get(0));
+                ca.getjComboBox8().setSelectedItem(dm.getPatients().get(0));
+                ca.getjComboBox9().setSelectedItem(dm.getMedecins().get(0));
+                ca.setVisible(true);
                 setVisible(false);
             }
         }
