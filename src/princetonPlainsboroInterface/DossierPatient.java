@@ -88,8 +88,10 @@ public class DossierPatient extends javax.swing.JFrame {
 
         DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getLibelles().toArray());
         comboLibelle = new JComboBox(cbModel);
+        comboLibelle.setSelectedItem(dm.getLibelles().get(0));
         DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
         cb1 = new JComboBox(cbModel1);
+        cb1.setSelectedItem(dm.getMedecins().get(0));
 
         ActionListener cbListener = new ActionListener() {
 
@@ -244,6 +246,7 @@ public class DossierPatient extends javax.swing.JFrame {
 
         DefaultComboBoxModel cbModel = new DefaultComboBoxModel(actes.toArray());
         comboLibelle = new JComboBox(cbModel);
+        comboLibelle.setSelectedItem(actes.get(0));
 
         ActionListener cbListener = new ActionListener() {
 
