@@ -49,6 +49,7 @@ public class NouvelleAdmission extends javax.swing.JFrame {
         jButton3.addActionListener(nal);
         jButton4.addActionListener(nal);
         jButton5.addActionListener(nal);
+        jButton6.addActionListener(nal);
         jComboBox2.addActionListener(cbl);
         jTextField2.addActionListener(tfl);
         listSelectionModel = jList3.getSelectionModel();
@@ -88,8 +89,6 @@ public class NouvelleAdmission extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
         jButton6 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -190,13 +189,6 @@ public class NouvelleAdmission extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel2.setText("Médecin :");
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        jLabel3.setText("Date :");
-
-        jComboBox3.setBackground(new java.awt.Color(0, 153, 51));
-        jComboBox3.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dates croissantes", "Dates décroissantes", "Entre deux dates" }));
-
         jButton6.setBackground(new java.awt.Color(0, 153, 51));
         jButton6.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jButton6.setText("Sans tri");
@@ -222,11 +214,7 @@ public class NouvelleAdmission extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(224, 224, 224)
                                 .addComponent(jButton6)))
                         .addGap(0, 99, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -244,8 +232,6 @@ public class NouvelleAdmission extends javax.swing.JFrame {
                     .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton6)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +239,7 @@ public class NouvelleAdmission extends javax.swing.JFrame {
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -326,10 +312,8 @@ public class NouvelleAdmission extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -441,6 +425,9 @@ public class NouvelleAdmission extends javax.swing.JFrame {
                 lmm.getJList1().setModel(dm.getMedecins());
                 lmm.setVisible(true);
                 setVisible(false);
+            } else if (source == jButton6){                
+                jList3.setModel(dm.getPatients());
+                jList3.repaint();
             }
         }
     }

@@ -33,11 +33,13 @@ public class DossierPatient extends javax.swing.JFrame {
     private princetonPlainsboroInterface.FicheDeSoins fds;
     private NouvelleAdmission na;
     private String l;
-    private Medecin m;
-    private Patient currentPatient;
     private String c;
     private Acte acte;
+    private Medecin m;
+    private Patient currentPatient;    
+    
     private int index = 0;
+    private DefaultListModel<String> actes;
 
     private DossierMedical dm;
 
@@ -134,7 +136,7 @@ public class DossierPatient extends javax.swing.JFrame {
                 }
             }
         };
-        
+
         comboLibelle.addActionListener(cbListener);
         cb1.addActionListener(cbListener);
 
@@ -198,7 +200,7 @@ public class DossierPatient extends javax.swing.JFrame {
             } else if (c.equals("PRO")) {
                 a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             }
-            
+
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
                 if (currentPatient.equals(dm.getFiches().get(z).getPatient())) {
                     if (m.equals(dm.getFiches().get(z).getMedecin())) {
@@ -231,23 +233,23 @@ public class DossierPatient extends javax.swing.JFrame {
     }
 
     public void supprimerActe() {
+        actes = new DefaultListModel();
         JPanel panel = new JPanel();
 
         final JComboBox comboLibelle;
         JLabel labelActe = new JLabel("Choisir l'acte à supprimer : ");
 
-        DefaultListModel<String> actes = new DefaultListModel();
         for (int j = 0; j < dm.getFiches().size(); j++) {
             if (currentPatient.equals(dm.getFiches().get(j).getPatient())) {
                 for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
-                    actes.addElement(dm.getFiches().get(j).getDate().afficherDate()+" : "+dm.getFiches().get(j).getActes().get(a).toString());
+                    actes.addElement(dm.getFiches().get(j).getDate().afficherDate() + " :" + dm.getFiches().get(j).getActes().get(a).toString());
+                    System.out.println(actes.size());
                 }
             }
         }
 
         DefaultComboBoxModel cbModel = new DefaultComboBoxModel(actes.toArray());
         comboLibelle = new JComboBox(cbModel);
-        comboLibelle.setSelectedItem(actes.get(0));
 
         ActionListener cbListener = new ActionListener() {
 
@@ -255,12 +257,16 @@ public class DossierPatient extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 JComboBox cb = (JComboBox) e.getSource();
                 if (cb == comboLibelle) {
-                    for (int i = 0; i < dm.getFiches().size(); i++) {
-                        if (currentPatient.equals(dm.getFiches().get(i).getPatient())) {
-                            for (int a = 0; a < dm.getFiches().get(i).getActes().size(); a++) {
-                                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getDate().afficherDate()+" :"+dm.getFiches().get(i).getActes().get(a).toString())) {
-                                    acte = ((Acte) dm.getFiches().get(i).getActes().get(a));
-                                    index = a;
+                    for (int a = 0; a < actes.size(); a++) {
+                        if (actes.get(a).equals((String) cb.getSelectedItem())) {
+                            for (int i = 0; i < dm.getFiches().size(); i++) {
+                                if (currentPatient.equals(dm.getFiches().get(i).getPatient())) {
+                                    for (int j = 0; j < dm.getFiches().get(i).getActes().size(); j++) {
+                                        if (cb.getSelectedItem().equals(dm.getFiches().get(i).getDate().afficherDate() + " :" + dm.getFiches().get(i).getActes().get(j).toString())) {
+                                            acte = ((Acte) dm.getFiches().get(i).getActes().get(j));
+                                            index = a;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -272,6 +278,7 @@ public class DossierPatient extends javax.swing.JFrame {
         comboLibelle.addActionListener(cbListener);
 
         panel.add(labelActe);
+
         panel.add(comboLibelle);
 
         int result = JOptionPane.showConfirmDialog(this, panel,
@@ -285,6 +292,7 @@ public class DossierPatient extends javax.swing.JFrame {
                 }
             }
         }
+
         ((DefaultTableModel) jTable2.getModel()).removeRow(index);
         jTable2.repaint();
     }
@@ -539,16 +547,21 @@ public class DossierPatient extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierPatient.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierPatient.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierPatient.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DossierPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DossierPatient.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

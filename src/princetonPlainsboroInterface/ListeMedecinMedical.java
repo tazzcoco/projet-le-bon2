@@ -55,6 +55,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
         jButton3.addActionListener(lmml);
         jButton4.addActionListener(lmml);
         jButton5.addActionListener(lmml);
+        jButton6.addActionListener(lmml);
         jComboBox1.addActionListener(cbl);
         jTextField1.addActionListener(tfl);
         listSelectionModel = jList1.getSelectionModel();
@@ -169,7 +170,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
         jComboBox1.setBackground(new java.awt.Color(0, 153, 51));
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tous", "Radiologie", "Oncologie", "Hématologie", "Dermatologie", "Neurologie", "Cardiologie", "ORL", "Anesthésiologie", "Gérontologie", "Gynécologie", "Pédiatrie", "Urologie" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Radiologie", "Oncologie", "Hématologie", "Dermatologie", "Neurologie", "Cardiologie", "ORL", "Anesthésiologie", "Gérontologie", "Gynécologie", "Pédiatrie", "Urologie" }));
 
         jList1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jScrollPane2.setViewportView(jList1);
@@ -412,6 +413,9 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
             } else if (source == jButton5) {
                 ajouterMedecin();
                 repaint();
+            } else if (source == jButton6) {                
+                jList1.setModel(dm.getMedecins());
+                jList1.repaint();
             }
         }
     }
@@ -431,6 +435,7 @@ public class ListeMedecinMedical extends javax.swing.JFrame {
                     dmm = new DossierMedecinMedical();
                     dmm.getJTextArea1().setText(dm.getMedecins().get(i).afficherDM());
                     dmm.setDM(dm);
+                    dmm.setCurrentMedecin(dm.getMedecins().get(i));
                     dmm.setVisible(true);
                     setVisible(false);
                 }

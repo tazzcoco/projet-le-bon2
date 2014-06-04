@@ -58,7 +58,11 @@ public class CoutAdministratif extends javax.swing.JFrame {
         jComboBox6.addActionListener(cbl);
         jComboBox7.addActionListener(cbl);
         jComboBox8.addActionListener(cbl);
-        jComboBox9.addActionListener(cbl);
+        jComboBox9.addActionListener(cbl);        
+        jButton1.addActionListener(cal);
+        jButton2.addActionListener(cal);
+        jButton3.addActionListener(cal);
+        jButton4.addActionListener(cal);
         jButton5.addActionListener(cal);
         jButton6.addActionListener(cal);
         jButton7.addActionListener(cal);
