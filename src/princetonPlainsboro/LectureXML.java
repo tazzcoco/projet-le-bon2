@@ -7,11 +7,12 @@
  */
 package princetonPlainsboro;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultListModel;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -32,6 +33,216 @@ public class LectureXML {
     public LectureXML(String nomFichier) {
         this.nomFichier = nomFichier;
     }
+    public DefaultListModel getSecretaireLourd() {
+        Secretaire secretaireCourant = null;
+        String nomCourant = "";
+        String prenomCourant = "";
+        String motDePasseSecretaire = "";
+        String donneesCourantes = "";
+        DefaultListModel<Secretaire> secretaires;
+
+        secretaires = new DefaultListModel();
+        try {
+            // instanciation du parser
+            InputStream in = new FileInputStream(repBase + "secretaire.xml");
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader parser = factory.createXMLStreamReader(in);
+            for (int event = parser.next(); event != XMLStreamConstants.END_DOCUMENT; event = parser.next()) {
+                // traitement selon l'evenement
+                switch (event) {
+
+                    case XMLStreamConstants.START_ELEMENT:
+                        if (parser.getLocalName().equals("root")) {
+                            // medecins = new DefaultListModel();
+                        }
+                        break;
+                    case XMLStreamConstants.END_ELEMENT:
+
+                        if (parser.getLocalName().equals("secretaire")) {
+                            secretaireCourant = new Secretaire(nomCourant, prenomCourant, motDePasseSecretaire);
+                            secretaires.addElement(secretaireCourant);
+                            break;
+                        }
+                        if (parser.getLocalName().equals("nom")) {
+                            System.out.println("pute");
+                            nomCourant = donneesCourantes ;
+                        }
+                        if (parser.getLocalName().equals("prenom")) {
+                            prenomCourant = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("motDePasse")) {
+                            motDePasseSecretaire = donneesCourantes;
+                        }
+                        break;
+                    case XMLStreamConstants.CHARACTERS:
+                        donneesCourantes = parser.getText();
+                        break;
+//                        if (parser.getLocalName().equals("root")) {
+//                            this.getDossier().ajouterMedecin(medecinCourant);
+//                        }
+//                        break;
+
+                }
+            }
+            parser.close();
+        } catch (XMLStreamException ex) {
+            System.out.println("Exception de type 'XMLStreamException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Details :");
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println("Exception de type 'IOException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Verifier le chemin.");
+            System.out.println(ex.getMessage());
+        }
+        return secretaires;
+    }
+    public DefaultListModel getPatientLourd() {
+        Patient patientCourant = null;
+        String nomCourant = "";
+        Date dateDeNaissance = null;
+        String adresse = "";
+        long numSecu = 0;
+        String prenomCourant = "";
+        
+        String donneesCourantes = "";
+        DefaultListModel<Patient> patients;
+
+        patients = new DefaultListModel();
+        try {
+            // instanciation du parser
+            InputStream in = new FileInputStream(repBase + "patient.xml");
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader parser = factory.createXMLStreamReader(in);
+            for (int event = parser.next(); event != XMLStreamConstants.END_DOCUMENT; event = parser.next()) {
+                // traitement selon l'evenement
+                switch (event) {
+
+                    case XMLStreamConstants.START_ELEMENT:
+                        if (parser.getLocalName().equals("root")) {
+                            // medecins = new DefaultListModel();
+                        }
+                        break;
+                    case XMLStreamConstants.END_ELEMENT:
+
+                        if (parser.getLocalName().equals("patient")) {
+                            patientCourant = new Patient(nomCourant, prenomCourant, dateDeNaissance, numSecu, adresse);
+                            patients.addElement(patientCourant);
+                        }
+                        if (parser.getLocalName().equals("nom")) {
+                            System.out.println("pute");
+                            nomCourant = donneesCourantes ;
+                        }
+                        if (parser.getLocalName().equals("prenom")) {
+                            prenomCourant = donneesCourantes;
+                        }
+                         if (parser.getLocalName().equals("dateDeNaissance")) {
+                            int annee = Integer.parseInt(donneesCourantes.substring(0, donneesCourantes.indexOf('-')));
+                            int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-') + 1, donneesCourantes.lastIndexOf('-')));
+                            int jour = Integer.parseInt(donneesCourantes.substring(donneesCourantes.lastIndexOf('-') + 1, donneesCourantes.length()));
+
+                            dateDeNaissance = new Date(jour, mois, annee);
+                        }
+                        if (parser.getLocalName().equals("adresse")) {
+                            adresse = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("numeroSecu")) {
+                            numSecu = Long.parseLong(donneesCourantes);
+                        }
+                        break;
+                    case XMLStreamConstants.CHARACTERS:
+                        donneesCourantes = parser.getText();
+                        break;
+//                        if (parser.getLocalName().equals("root")) {
+//                            this.getDossier().ajouterMedecin(medecinCourant);
+//                        }
+//                        break;
+
+                }
+            }
+            parser.close();
+        } catch (XMLStreamException ex) {
+            System.out.println("Exception de type 'XMLStreamException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Details :");
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println("Exception de type 'IOException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Verifier le chemin.");
+            System.out.println(ex.getMessage());
+        }
+        return patients;
+    }
+    public DefaultListModel getMedecinLourd() {
+        Medecin medecinCourant = null;
+        String nomCourant = "";
+        String prenomCourant = "";
+        String specialiteCourante = "";
+        String numeroTelCourant = "";
+        String motDePasseMedecin = "";
+        String donneesCourantes = "";
+        DefaultListModel<Medecin> medecins;
+
+        medecins = new DefaultListModel();
+        try {
+            // instanciation du parser
+            InputStream in = new FileInputStream(repBase + "medecin.xml");
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader parser = factory.createXMLStreamReader(in);
+            for (int event = parser.next(); event != XMLStreamConstants.END_DOCUMENT; event = parser.next()) {
+                // traitement selon l'evenement
+                switch (event) {
+
+                    case XMLStreamConstants.START_ELEMENT:
+                        if (parser.getLocalName().equals("root")) {
+                            // medecins = new DefaultListModel();
+                        }
+                        break;
+                    case XMLStreamConstants.END_ELEMENT:
+
+                        if (parser.getLocalName().equals("medecin")) {
+                            System.out.println("bitch");
+                            medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante, numeroTelCourant, motDePasseMedecin);
+                            medecins.addElement(medecinCourant);
+                            break;
+                        }
+                        if (parser.getLocalName().equals("nom")) {
+                            System.out.println("pute");
+                            nomCourant = donneesCourantes ;
+                        }
+                        if (parser.getLocalName().equals("prenom")) {
+                            prenomCourant = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("specialite")) {
+                            specialiteCourante = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("numeroTel")) {
+                            numeroTelCourant = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("motDePasse")) {
+                            motDePasseMedecin = donneesCourantes;
+                        }
+                        break;
+                    case XMLStreamConstants.CHARACTERS:
+                        donneesCourantes = parser.getText();
+                        break;
+//                        if (parser.getLocalName().equals("root")) {
+//                            this.getDossier().ajouterMedecin(medecinCourant);
+//                        }
+//                        break;
+
+                }
+            }
+            parser.close();
+        } catch (XMLStreamException ex) {
+            System.out.println("Exception de type 'XMLStreamException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Details :");
+            System.out.println(ex);
+        } catch (IOException ex) {
+            System.out.println("Exception de type 'IOException' lors de la lecture du fichier : " + nomFichier);
+            System.out.println("Verifier le chemin.");
+            System.out.println(ex.getMessage());
+        }
+        return medecins;
+    }
 
     public DossierMedical getDossier() {
         DossierMedical dossierCourant = null;
@@ -47,11 +258,11 @@ public class LectureXML {
         String motDePasseMedecin = "";
         Date dateDeNaissance = null;
         String adresse = "";
-        long numSecu =0;
+        long numSecu = 0;
         Code codeCourant = null;
         int coefCourant = 0;
-        double coutTotal=0.00;
-        String observation ="";
+        double coutTotal = 0.00;
+        String observation = "";
         String nomActe = "";
 
         // analyser le fichier par StAX
@@ -70,18 +281,19 @@ public class LectureXML {
                             dossierCourant = new DossierMedical();
                         }
                         break;
+
                     case XMLStreamConstants.END_ELEMENT:
 
                         if (parser.getLocalName().equals("acte")) {
-                            coutTotal=codeCourant.calculerCout(coefCourant);
-                            actes.add(new Acte(date,nomActe,observation, medecinCourant,codeCourant,coefCourant, coutTotal));
+                            coutTotal = codeCourant.calculerCout(coefCourant);
+                            actes.add(new Acte(date, nomActe, observation, medecinCourant, codeCourant, coefCourant, coutTotal));
                         }
-                        
+
                         if (parser.getLocalName().equals("observation")) {
                             observation = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("nomActe")) {
-                            nomActe =donneesCourantes;
+                            nomActe = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("code")) {
                             codeCourant = getCode(donneesCourantes);
@@ -115,7 +327,8 @@ public class LectureXML {
                             dossierCourant.ajouterFiche(f);
                         }
                         if (parser.getLocalName().equals("medecin")) {
-                            medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante, numeroTelCourant, motDePasseMedecin);
+                            medecinCourant = new Medecin(nomCourant,prenomCourant,specialiteCourante,numeroTelCourant,motDePasseMedecin);
+                            //dossierCourant.setMedecins(this.getMedecinLourd());
                         }
                         if (parser.getLocalName().equals("nom")) {
                             nomCourant = donneesCourantes;
@@ -164,11 +377,12 @@ public class LectureXML {
             System.out.println("Verifier le chemin.");
             System.out.println(ex.getMessage());
         }
-
+        dossierCourant.setPatient(this.getPatientLourd());
+        dossierCourant.setMedecins(this.getMedecinLourd());
         return dossierCourant;
-        
+
     }
-    
+
     private static Code getCode(String code) {
         if (code.equals("CS")) {
             return Code.CS;
