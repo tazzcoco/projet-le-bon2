@@ -7,6 +7,8 @@
         <nom>Bono</nom>
         <prenom>Jean</prenom>
         <specialite>ORL</specialite>
+        <numeroTel>0442655998</numeroTel>
+        <motDePasse>Bono_J</motDePasse>
     </medecin>
     <patient>
         <nom>Track</nom>
@@ -32,6 +34,8 @@
         <nom>Deblouze</nom>
         <prenom>Agathe</prenom>
         <specialite>Cardiologie</specialite>
+        <numeroTel>0442655987</numeroTel>
+        <motDePasse>Deblouze_A</motDePasse>
     </medecin>
     <patient>
         <nom>Bole</nom>
@@ -53,6 +57,8 @@
         <nom>Deblouze</nom>
         <prenom>Agathe</prenom>
         <specialite>Cardiologie</specialite>
+        <numeroTel>0442655987</numeroTel>
+        <motDePasse>Deblouze_A</motDePasse>    
     </medecin>
     <patient>
         <nom>Bole</nom>
@@ -70,6 +76,8 @@
         <nom>Heget</nom>
         <prenom>Yves</prenom>
         <specialite>Gynécologie</specialite>
+        <numeroTel>0442655988</numeroTel>
+        <motDePasse>Heget_Y</motDePasse>
     </medecin>
     <patient>
         <nom>Bole</nom>
@@ -87,6 +95,8 @@
         <nom>Covert</nom>
         <prenom>Harry</prenom>
         <specialite>ORL</specialite>
+        <numeroTel>0442655964</numeroTel>
+        <motDePasse>Covert_H</motDePasse>
     </medecin>
     <patient>
         <nom>Epi</nom>
@@ -108,6 +118,8 @@
         <nom>Foupasune</nom>
         <prenom>Jean</prenom>
         <specialite>ORL</specialite>
+        <numeroTel>0442655932</numeroTel>
+        <motDePasse>Foupasune_J</motDePasse>
     </medecin>
     <patient>
         <nom>Henfayitte</nom>

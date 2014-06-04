@@ -43,6 +43,8 @@ public class LectureXML {
         String nomCourant = "";
         String prenomCourant = "";
         String specialiteCourante = "";
+        String numeroTelCourant = "";
+        String motDePasseMedecin = "";
         Code codeCourant = null;
         int coefCourant = 0;
         
@@ -94,7 +96,7 @@ public class LectureXML {
                             dossierCourant.ajouterFiche(f);
                         }
                         if (parser.getLocalName().equals("medecin")) {
-                            medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante);
+                            medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante, numeroTelCourant, motDePasseMedecin);
                         }
                         if (parser.getLocalName().equals("nom")) {
                             nomCourant = donneesCourantes;
@@ -107,6 +109,12 @@ public class LectureXML {
                         }
                         if (parser.getLocalName().equals("specialite")) {
                             specialiteCourante = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("numeroTel")) {
+                            numeroTelCourant = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("motDePasse")) {
+                            motDePasseMedecin = donneesCourantes;
                         }
                         break;
                     case XMLStreamConstants.CHARACTERS:

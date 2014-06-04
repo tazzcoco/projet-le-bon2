@@ -8,12 +8,12 @@ public class Medecin {
     private String numTel;
     private String mdp;
     
-    //constructeur 1
-    public Medecin(String nom, String prenom, String specialite) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.specialite = specialite;
-    }
+//    //constructeur 1
+//    public Medecin(String nom, String prenom, String specialite) {
+//        this.nom = nom;
+//        this.prenom = prenom;
+//        this.specialite = specialite;
+//    }
 
     //contructeur 2
     public Medecin(String nom, String prenom, String specialite, String numTel, String mdp) {
@@ -46,7 +46,7 @@ public class Medecin {
     }
 
     public String toString() {
-        return "Dr " + prenom + " " + nom + ", " + specialite;
+        return "Dr " + prenom + " " + nom + ", " + specialite+ ", numero de tel :"+ numTel;
     }
 
     public boolean equals(Object o) {
