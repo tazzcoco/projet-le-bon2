@@ -57,8 +57,7 @@ public class Acte {
 
     @Override
     public String toString() {
-        return "date :" + date +"\n\ttype d'acte :"+type+ "\n\tobservations éventuelles :"+observations +"\n\tmédecin :"+medecin+ "\n\tcode :"+ code + "\n\tcoef :"+coef + "\n\tcoût total :"+coutTotal+"euros";
-        
+       return code.toString() + ", coefficient : " + coef;
     }
 
     public double cout() {
