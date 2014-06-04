@@ -22,6 +22,7 @@ public enum Code {
     // attributs de l'�num :
     private String libelle;
     private double cout;
+    private String type;
 
     // constructeur :
     private Code(String libelle, double cout) {
@@ -33,7 +34,7 @@ public enum Code {
     public String toString() {
         return super.toString() + " : " + libelle + ", cout=" + cout + " euros";
     }
-
+    
     // calcule le prix pour un coefficient donne :
     public double calculerCout(int coefficient) {
         return coefficient * cout;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<root>
+    <medecin>
+        <nom>Deblouze</nom>
+        <prenom>Agathe</prenom>
+        <specialite>Cardiologie</specialite>
+        <numeroTel>0442655987</numeroTel>
+        <motDePasse>Deblouze_A</motDePasse>
+    </medecin>
+    <medecin>
+        <nom>Bono</nom>
+        <prenom>Jean</prenom>
+        <specialite>ORL</specialite>
+        <numeroTel>0442655998</numeroTel>
+        <motDePasse>Bono_J</motDePasse>
+    </medecin>
+    <medecin>
+        <nom>Heget</nom>
+        <prenom>Yves</prenom>
+        <specialite>Gynécologie</specialite>
+        <numeroTel>0442655988</numeroTel>
+        <motDePasse>Heget_Y</motDePasse>
+    </medecin>
+    <medecin>
+        <nom>Covert</nom>
+        <prenom>Harry</prenom>
+        <specialite>ORL</specialite>
+        <numeroTel>0442655964</numeroTel>
+        <motDePasse>Covert_H</motDePasse>
+    </medecin>
+    <medecin>
+        <nom>Foupasune</nom>
+        <prenom>Jean</prenom>
+        <specialite>ORL</specialite>
+        <numeroTel>0442655932</numeroTel>
+        <motDePasse>Foupasune_J</motDePasse>
+    </medecin>
+</root>

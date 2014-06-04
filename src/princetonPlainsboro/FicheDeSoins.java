@@ -41,13 +41,13 @@ public class FicheDeSoins {
         actes.addElement(acte);
     }
 
-    public void ajouterActe(Code code, int coefficient) {
-        Acte acte = new Acte(code, coefficient);
-        actes.addElement(acte);
-    }
+//    public void ajouterActe(Code code, int coefficient) {
+//        Acte acte = new Acte(code, coefficient);
+//        actes.addElement(acte);
+//    }
     
-    public void ajouterActe(Date date,String libelle,String observation, Medecin medecin,String code, double coutTotal){
-        Acte acte = new Acte(date, libelle, observation, medecin, code, coutTotal);
+    public void ajouterActe(Date date,String libelle,String observation, Medecin medecin,Code code,int coef, double coutTotal){
+        Acte acte = new Acte(date, libelle, observation, medecin, code,coef, coutTotal);
         actes.addElement(acte);
     }
     

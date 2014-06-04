@@ -20,14 +20,23 @@
     <acte>
         <code>CS</code>
         <coef>1</coef>
+        <nomActe>consultation au cabinet</nomActe>
+        <type>diagnostique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>ORT</code>
         <coef>50</coef>
+        <nomActe>orthodontie</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>PRO</code>
         <coef>150</coef>
+        <nomActe>prothese dentaire</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
   
@@ -50,10 +59,16 @@
     <acte>
         <code>CSC</code>
         <coef>1</coef>
+        <nomActe>consultation cardiologie</nomActe>
+        <type>diagnostique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>KC</code>
         <coef>120</coef>
+        <nomActe>actes de chirurgie et de specialite</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
 
@@ -76,6 +91,16 @@
     <acte>
         <code>CSC</code>
         <coef>2</coef>
+        <nomActe>consultation cardiologie</nomActe>
+        <type>diagnostique</type>
+        <observation>aucune</observation>
+    </acte>    
+    <acte>
+        <code>FP</code>
+        <coef>2</coef>
+        <nomActe>forfait pediatrique</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
   
@@ -98,6 +123,9 @@
     <acte>
         <code>KE</code>
         <coef>1</coef>
+        <nomActe>actes d'echographie, de doppler</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
 
@@ -120,10 +148,16 @@
     <acte>
         <code>CS</code>
         <coef>1</coef>
+        <nomActe>consultation au cabinet</nomActe>
+        <type>diagnostique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>KFA</code>
         <coef>72</coef>
+        <nomActe>forfait A</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
     
@@ -146,26 +180,51 @@
     <acte>
         <code>CS</code>
         <coef>1</coef>
+        <nomActe>consultation au cabinet</nomActe>
+        <type>diagnostique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>KFA</code>
         <coef>72</coef>
+        <nomActe>forfait A</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
+    </acte>
+    <acte>
+        <code>KFB</code>
+        <coef>72</coef>
+        <nomActe>forfait B</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>K</code>
         <coef>1000</coef>
+        <nomActe>autres actes de specialite</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>KE</code>
         <coef>60</coef>
+        <nomActe>actes d'echographie, de doppler</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>ORT</code>
         <coef>85</coef>
+        <nomActe>orthodontie</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
     <acte>
         <code>PRO</code>
         <coef>850</coef>
+        <nomActe>prothese dentaire</nomActe>
+        <type>thérapeutique</type>
+        <observation>aucune</observation>
     </acte>
   </ficheDeSoins>
   

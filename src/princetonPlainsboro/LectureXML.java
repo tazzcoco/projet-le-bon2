@@ -50,6 +50,9 @@ public class LectureXML {
         long numSecu =0;
         Code codeCourant = null;
         int coefCourant = 0;
+        double coutTotal=0.00;
+        String observation ="";
+        String nomActe = "";
 
         // analyser le fichier par StAX
         try {
@@ -68,8 +71,17 @@ public class LectureXML {
                         }
                         break;
                     case XMLStreamConstants.END_ELEMENT:
+
                         if (parser.getLocalName().equals("acte")) {
-                            actes.add(new Acte(codeCourant, coefCourant));
+                            coutTotal=codeCourant.calculerCout(coefCourant);
+                            actes.add(new Acte(date,nomActe,observation, medecinCourant,codeCourant,coefCourant, coutTotal));
+                        }
+                        
+                        if (parser.getLocalName().equals("observation")) {
+                            observation = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("nomActe")) {
+                            nomActe =donneesCourantes;
                         }
                         if (parser.getLocalName().equals("code")) {
                             codeCourant = getCode(donneesCourantes);
@@ -80,6 +92,9 @@ public class LectureXML {
                         if (parser.getLocalName().equals("coef")) {
                             coefCourant = Integer.parseInt(donneesCourantes);
                         }
+//                        if (parser.getLocalName().equals("type")) {
+//                            type =donneesCourantes;
+//                        }
                         if (parser.getLocalName().equals("date")) {
                             int annee = Integer.parseInt(donneesCourantes.substring(0, donneesCourantes.indexOf('-')));
                             int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-') + 1, donneesCourantes.lastIndexOf('-')));
@@ -151,8 +166,9 @@ public class LectureXML {
         }
 
         return dossierCourant;
+        
     }
-
+    
     private static Code getCode(String code) {
         if (code.equals("CS")) {
             return Code.CS;

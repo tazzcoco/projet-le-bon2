@@ -134,6 +134,7 @@ public class DossierPatient extends javax.swing.JFrame {
                 }
             }
         };
+        
         comboLibelle.addActionListener(cbListener);
         cb1.addActionListener(cbListener);
 
@@ -197,7 +198,9 @@ public class DossierPatient extends javax.swing.JFrame {
             } else if (c.equals("PRO")) {
                 a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             }
-
+            
+            
+            //a = new Acte(d,l,areaObservation.getText(),m,acte.getCode().toString(),acte.getCode().calculerCout(acte.getCoef()));
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
                 if (currentPatient.equals(dm.getFiches().get(z).getPatient())) {
                     if (m.equals(dm.getFiches().get(z).getMedecin())) {
