@@ -36,6 +36,8 @@ public class DossierPatient extends javax.swing.JFrame {
     private Medecin m;
     private Patient currentPatient;
     private String c;
+    private Acte acte;
+    private int index = 0;
 
     private DossierMedical dm;
 
@@ -173,25 +175,25 @@ public class DossierPatient extends javax.swing.JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
             if (c.equals("CS")) {
-                a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("CSC")) {
-                a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("FP")) {
-                a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("KC")) {
-                a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("KE")) {
-                a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("K")) {
-                a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("KFA")) {
-                a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("KFB")) {
-                a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("ORT")) {
-                a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             } else if (c.equals("PRO")) {
-                a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()),areaObservation.getText());
+                a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             }
 
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
@@ -213,7 +215,6 @@ public class DossierPatient extends javax.swing.JFrame {
                     }
                 }
             }
-
             Object[] line = new Object[6];
             line[0] = d.afficherDate();
             line[1] = l;
@@ -224,6 +225,64 @@ public class DossierPatient extends javax.swing.JFrame {
             ((DefaultTableModel) jTable2.getModel()).addRow(line);
             jTable2.repaint();
         }
+    }
+
+    public void supprimerActe() {
+        JPanel panel = new JPanel();
+
+        final JComboBox comboLibelle;
+        JLabel labelActe = new JLabel("Choisir l'acte à supprimer : ");
+
+        DefaultListModel<String> actes = new DefaultListModel();
+        for (int j = 0; j < dm.getFiches().size(); j++) {
+            if (currentPatient.equals(dm.getFiches().get(j).getPatient())) {
+                for (int a = 0; a < dm.getFiches().get(j).getActes().size(); a++) {
+                    actes.addElement(dm.getFiches().get(j).getDate().afficherDate()+" :"+dm.getFiches().get(j).getActes().get(a).toString());
+                }
+            }
+        }
+
+        DefaultComboBoxModel cbModel = new DefaultComboBoxModel(actes.toArray());
+        comboLibelle = new JComboBox(cbModel);
+
+        ActionListener cbListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox cb = (JComboBox) e.getSource();
+                if (cb == comboLibelle) {
+                    for (int i = 0; i < dm.getFiches().size(); i++) {
+                        if (currentPatient.equals(dm.getFiches().get(i).getPatient())) {
+                            for (int a = 0; a < dm.getFiches().get(i).getActes().size(); a++) {
+                                if (cb.getSelectedItem().equals(dm.getFiches().get(i).getDate().afficherDate()+" :"+dm.getFiches().get(i).getActes().get(a).toString())) {
+                                    acte = ((Acte) dm.getFiches().get(i).getActes().get(a));
+                                    index = a;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        comboLibelle.addActionListener(cbListener);
+
+        panel.add(labelActe);
+        panel.add(comboLibelle);
+
+        int result = JOptionPane.showConfirmDialog(this, panel,
+                "Veuillez choisir l'acte à supprimer", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            for (int i = 0; i < dm.getFiches().size(); i++) {
+                if (currentPatient.equals(dm.getFiches().get(i).getPatient())) {
+                    if (dm.getFiches().get(i).getActes().contains(acte)) {
+                        dm.getFiches().get(i).supprimerActe(acte);
+                    }
+                }
+            }
+        }
+        ((DefaultTableModel) jTable2.getModel()).removeRow(index);
+        jTable2.repaint();
     }
 
     public void setCurrentPatient(Patient currentPatient) {
@@ -572,6 +631,7 @@ public class DossierPatient extends javax.swing.JFrame {
                 repaint();
             } else if (source == jButton7) {
                 //méthode retirerActe(Acte a); de FicheDeSoins
+                supprimerActe();
                 //fenêtre de confirmation à ajouter "Acte retiré"
                 repaint();
             } else if (source == jButton8) {
