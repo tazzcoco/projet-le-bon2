@@ -5,7 +5,6 @@
  *
  * Lecture d'un document XML et transformation en instances Java
  */
-
 package princetonPlainsboro;
 
 import java.io.IOException;
@@ -24,20 +23,21 @@ import javax.xml.stream.XMLStreamReader;
  * @author promayon
  */
 public class LectureXML {
+
     /// nom du document XML a analyser
     private String nomFichier;
     private final static String repBase = "src/donnees/";
-    
+
     // 'nomFichier' est le nom d'un fichier XML se trouvant dans le repertoire 'repBase' a lire :
     public LectureXML(String nomFichier) {
         this.nomFichier = nomFichier;
     }
-    
+
     public DossierMedical getDossier() {
         DossierMedical dossierCourant = null;
         Date date = null;
         Medecin medecinCourant = null;
-        Patient patientCourant= null;
+        Patient patientCourant = null;
         List<Acte> actes = new Vector<Acte>();
         String donneesCourantes = "";
         String nomCourant = "";
@@ -45,9 +45,12 @@ public class LectureXML {
         String specialiteCourante = "";
         String numeroTelCourant = "";
         String motDePasseMedecin = "";
+        Date dateDeNaissance = null;
+        String adresse = "";
+        long numSecu =0;
         Code codeCourant = null;
         int coefCourant = 0;
-        
+
         // analyser le fichier par StAX
         try {
             // instanciation du parser
@@ -67,28 +70,29 @@ public class LectureXML {
                     case XMLStreamConstants.END_ELEMENT:
                         if (parser.getLocalName().equals("acte")) {
                             actes.add(new Acte(codeCourant, coefCourant));
-                        }                        
+                        }
                         if (parser.getLocalName().equals("code")) {
                             codeCourant = getCode(donneesCourantes);
-                            if (codeCourant==null) 
-                                throw new XMLStreamException("Impossible de trouver le code d'acte = "+donneesCourantes);
-                        }                        
+                            if (codeCourant == null) {
+                                throw new XMLStreamException("Impossible de trouver le code d'acte = " + donneesCourantes);
+                            }
+                        }
                         if (parser.getLocalName().equals("coef")) {
                             coefCourant = Integer.parseInt(donneesCourantes);
                         }
                         if (parser.getLocalName().equals("date")) {
                             int annee = Integer.parseInt(donneesCourantes.substring(0, donneesCourantes.indexOf('-')));
-                            int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-')+1, donneesCourantes.lastIndexOf('-')));
-                            int jour = Integer.parseInt(donneesCourantes.substring(donneesCourantes.lastIndexOf('-')+1, donneesCourantes.length()));
-                            
+                            int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-') + 1, donneesCourantes.lastIndexOf('-')));
+                            int jour = Integer.parseInt(donneesCourantes.substring(donneesCourantes.lastIndexOf('-') + 1, donneesCourantes.length()));
+
                             date = new Date(jour, mois, annee);
                         }
                         if (parser.getLocalName().equals("ficheDeSoins")) {
                             FicheDeSoins f = new FicheDeSoins(patientCourant, medecinCourant, date);
                             // ajout des actes
-                            for (int i=0;i<actes.size();i++) {
+                            for (int i = 0; i < actes.size(); i++) {
                                 Acte a = (Acte) actes.get(i);
-                                f.ajouterActe(a);                                
+                                f.ajouterActe(a);
                             }
                             // effacer tous les actes de la liste
                             actes.clear();
@@ -102,7 +106,7 @@ public class LectureXML {
                             nomCourant = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("patient")) {
-                            patientCourant = new Patient(nomCourant, prenomCourant);
+                            patientCourant = new Patient(nomCourant, prenomCourant, dateDeNaissance, numSecu, adresse);
                         }
                         if (parser.getLocalName().equals("prenom")) {
                             prenomCourant = donneesCourantes;
@@ -115,6 +119,19 @@ public class LectureXML {
                         }
                         if (parser.getLocalName().equals("motDePasse")) {
                             motDePasseMedecin = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("dateDeNaissance")) {
+                            int annee = Integer.parseInt(donneesCourantes.substring(0, donneesCourantes.indexOf('-')));
+                            int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-') + 1, donneesCourantes.lastIndexOf('-')));
+                            int jour = Integer.parseInt(donneesCourantes.substring(donneesCourantes.lastIndexOf('-') + 1, donneesCourantes.length()));
+
+                            dateDeNaissance = new Date(jour, mois, annee);
+                        }
+                        if (parser.getLocalName().equals("adresse")) {
+                            adresse = donneesCourantes;
+                        }
+                        if (parser.getLocalName().equals("numeroSecu")) {
+                            numSecu = Long.parseLong(donneesCourantes);
                         }
                         break;
                     case XMLStreamConstants.CHARACTERS:
@@ -132,32 +149,42 @@ public class LectureXML {
             System.out.println("Verifier le chemin.");
             System.out.println(ex.getMessage());
         }
-       
+
         return dossierCourant;
     }
-    
+
     private static Code getCode(String code) {
-        if (code.equals("CS"))
+        if (code.equals("CS")) {
             return Code.CS;
-        if (code.equals("CSC"))
+        }
+        if (code.equals("CSC")) {
             return Code.CSC;
-        if (code.equals("FP"))
+        }
+        if (code.equals("FP")) {
             return Code.FP;
-        if (code.equals("KC"))
+        }
+        if (code.equals("KC")) {
             return Code.KC;
-        if (code.equals("KE"))
+        }
+        if (code.equals("KE")) {
             return Code.KE;
-        if (code.equals("K"))
+        }
+        if (code.equals("K")) {
             return Code.K;
-        if (code.equals("KFA"))
+        }
+        if (code.equals("KFA")) {
             return Code.KFA;
-        if (code.equals("KFB"))
+        }
+        if (code.equals("KFB")) {
             return Code.KFB;
-        if (code.equals("ORT"))
+        }
+        if (code.equals("ORT")) {
             return Code.ORT;
-        if (code.equals("PRO"))
+        }
+        if (code.equals("PRO")) {
             return Code.PRO;
+        }
         // probleme : code inconnu
-        return null;            
+        return null;
     }
 }

@@ -13,6 +13,9 @@
     <patient>
         <nom>Track</nom>
         <prenom>Pat</prenom>
+        <adresse>26, rue de la poste 53000 PRINCETON</adresse>
+        <dateDeNaissance>1983-07-28</dateDeNaissance>
+        <numeroSecu>183075300121357</numeroSecu>
     </patient>
     <acte>
         <code>CS</code>
@@ -40,6 +43,9 @@
     <patient>
         <nom>Bole</nom>
         <prenom>Pat</prenom>
+        <adresse>26, rue de la poste 53000 PRINCETON</adresse>
+        <dateDeNaissance>1959-11-08</dateDeNaissance>
+        <numeroSecu>159115300123587</numeroSecu>
     </patient>
     <acte>
         <code>CSC</code>
@@ -63,6 +69,9 @@
     <patient>
         <nom>Bole</nom>
         <prenom>Maggy</prenom>
+        <adresse>63, avenue des platanes 53000 PRINCETON</adresse>
+        <dateDeNaissance>1992-01-13</dateDeNaissance>
+        <numeroSecu>292015300145665</numeroSecu>
     </patient>
     <acte>
         <code>CSC</code>
@@ -82,6 +91,9 @@
     <patient>
         <nom>Bole</nom>
         <prenom>Maggy</prenom>
+        <adresse>63, avenue des platanes 53000 PRINCETON</adresse>
+        <dateDeNaissance>1992-01-13</dateDeNaissance>
+        <numeroSecu>292015300145665</numeroSecu>
     </patient>
     <acte>
         <code>KE</code>
@@ -101,6 +113,9 @@
     <patient>
         <nom>Epi</nom>
         <prenom>Fanie</prenom>
+        <adresse>1207, avenue de la république 53000 PRINCETON</adresse>
+        <dateDeNaissance>1977-12-08</dateDeNaissance>
+        <numeroSecu>277125300178951</numeroSecu>
     </patient>
     <acte>
         <code>CS</code>
@@ -124,6 +139,9 @@
     <patient>
         <nom>Henfayitte</nom>
         <prenom>Melusine</prenom>
+        <adresse>67, rue des gros 53000 PRINCETON</adresse>
+        <dateDeNaissance>1963-10-15</dateDeNaissance>
+        <numeroSecu>263105300115915</numeroSecu>
     </patient>
     <acte>
         <code>CS</code>
