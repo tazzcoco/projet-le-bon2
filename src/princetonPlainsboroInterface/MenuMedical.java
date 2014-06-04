@@ -284,7 +284,6 @@ public class MenuMedical extends JFrame {
 
             if (source == jButton1) {
                 pi = new PrincetonInterface();
-                pi.setBounds(positionFenetre);
                 pi.setDM(dm);
                 pi.setVisible(true);
                 setVisible(false);

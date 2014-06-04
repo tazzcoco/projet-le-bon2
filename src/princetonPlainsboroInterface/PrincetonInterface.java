@@ -5,12 +5,13 @@
  */
 package princetonPlainsboroInterface;
 
-import princetonPlainsboro.*;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import princetonPlainsboro.*;
 
 public class PrincetonInterface extends javax.swing.JFrame {
 
@@ -30,6 +31,8 @@ public class PrincetonInterface extends javax.swing.JFrame {
         cbl = new ComboBoxListener();
         jButton1.addActionListener(pil);
         jComboBox1.addActionListener(cbl);
+        jComboBox1.addItem("Secteur médical");
+        jComboBox1.addItem("Secteur administratif");
         setLocationRelativeTo(getParent());
     }
 
@@ -80,13 +83,13 @@ public class PrincetonInterface extends javax.swing.JFrame {
         jFormattedTextField1.setFont(new java.awt.Font("sansserif", 2, 12)); // NOI18N
 
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Secteur médical", "Secteur administratif" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(153, 153, 255));
         jTextField1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jTextField1.setText("Login (department name):");
@@ -97,6 +100,7 @@ public class PrincetonInterface extends javax.swing.JFrame {
             }
         });
 
+        jTextField2.setEditable(false);
         jTextField2.setBackground(new java.awt.Color(153, 153, 255));
         jTextField2.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jTextField2.setText("Password :");
@@ -269,25 +273,28 @@ public class PrincetonInterfaceListener implements ActionListener {
             if (source == jButton1) {
                 if (secteur == 0) {
                     for (int i = 0; i < dm.getMedecins().size(); i++) {
-                        if (jFormattedTextField1.getText().equals(dm.getMedecins().get(i).getNom().toUpperCase())) {
-                            if (jPasswordField1.getText().equals(dm.getMedecins().get(i).getMdp())) {
-                                MenuMedical mm = new MenuMedical();
-                                mm.setDM(dm);
-                                mm.setLocationRelativeTo(getParent());
-                                mm.setVisible(true);
-                                setVisible(false);
-                            }
+                        if ((jFormattedTextField1.getText().equals(dm.getMedecins().get(i).getNom().toUpperCase())
+                                && (jPasswordField1.getText().equals(dm.getMedecins().get(i).getMdp())))) {
+                            MenuMedical mm = new MenuMedical();
+                            mm.setDM(dm);
+                            mm.setLocationRelativeTo(getParent());
+                            mm.setVisible(true);
+                            setVisible(false);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
                         }
+                        break;
                     }
+
                 } else if (secteur == 1) {
 //                    for (int i = 0; i < dm.getSecretaires().size(); i++) {
 //                        if (jFormattedTextField1.getText().equals(dm.getSecretaires().get(i).getNom().toUpperCase())) {
 //                            if (jPasswordField1.getText().equals(dm.getSecretaires().get(i).getMdp())) {
-//                                MenuAdministratif ma = new MenuAdministratif();
-//                                ma.setDM(dm);
-//                                ma.setLocationRelativeTo(getParent());
-//                                ma.setVisible(true);
-//                                setVisible(false);
+                    MenuAdministratif ma = new MenuAdministratif();
+                    ma.setDM(dm);
+                    ma.setLocationRelativeTo(getParent());
+                    ma.setVisible(true);
+                    setVisible(false);
 //                            }
 //                        }
 //                    }

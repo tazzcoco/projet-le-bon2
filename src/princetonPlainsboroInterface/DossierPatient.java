@@ -173,7 +173,7 @@ public class DossierPatient extends javax.swing.JFrame {
 
         int result = JOptionPane.showConfirmDialog(this, panelGlobal,
                 "Veuillez saisir les informations concernant l'acte médical :", JOptionPane.OK_CANCEL_OPTION);
-        Date d = null;
+        Date d;
         d = new Date(Integer.parseInt(fieldDateDay.getText()), Integer.parseInt(fieldDateMonth.getText()), Integer.parseInt(fieldDateYear.getText()));
 
         if (result == JOptionPane.OK_OPTION) {
@@ -199,8 +199,6 @@ public class DossierPatient extends javax.swing.JFrame {
                 a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
             }
             
-            
-            //a = new Acte(d,l,areaObservation.getText(),m,acte.getCode().toString(),acte.getCode().calculerCout(acte.getCoef()));
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
                 if (currentPatient.equals(dm.getFiches().get(z).getPatient())) {
                     if (m.equals(dm.getFiches().get(z).getMedecin())) {
@@ -663,16 +661,4 @@ public class DossierPatient extends javax.swing.JFrame {
             }
         }
     }
-    /*public class tableListSelectionListener implements ListSelectionListener {
-
-     @Override
-     public void valueChanged(ListSelectionEvent lse) {
-     int[] rows = jTable2.getSelectedRows();
-     if (rows.length > 1) {
-     grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[1]);
-     } else if (rows.length > 0) {
-     grapher2.getGP().getFunctionModel().setSelectionInterval(rows[0], rows[0]);
-     }
-     }
-     }*/
 }

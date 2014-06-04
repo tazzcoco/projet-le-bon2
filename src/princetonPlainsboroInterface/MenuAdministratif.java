@@ -262,7 +262,6 @@ public class MenuAdministratif extends javax.swing.JFrame {
                 setVisible(false);
             } else if (source == jButton3) {
                 pi = new PrincetonInterface();
-                pi.setBounds(positionFenetre);
                 pi.setDM(dm);
                 pi.setVisible(true);
                 setVisible(false);
