@@ -23,10 +23,13 @@ public class DossierMedical {
     private DefaultListModel<FicheDeSoins> fiches; //liste des fiches de soins 
     private DefaultListModel<Patient> patients; //liste des patients
     private DefaultListModel<Medecin> medecins; //liste des médecins
-
+    private DefaultListModel<Secretaire>secretaires;
     //accesseurs des listes
     public DefaultListModel<FicheDeSoins> getFiches() {
         return fiches;
+    }
+    public DefaultListModel<Secretaire> getSecretaire() {
+        return secretaires;
     }
 
     public DefaultListModel<Patient> getPatients() {
@@ -36,14 +39,25 @@ public class DossierMedical {
     public DefaultListModel<Medecin> getMedecins() {
         return medecins;
     }
+    
+    public void setMedecins(DefaultListModel dlm){
+        this.medecins=dlm;
+    }
+    public void setPatient(DefaultListModel dlm){
+        this.patients=dlm;
+    }
+    public void setSecretaire(DefaultListModel dlm){
+        this.secretaires=dlm;
+    }
 
     //constructeur
     public DossierMedical() {
         fiches = new DefaultListModel();
         patients = new DefaultListModel();
         medecins = new DefaultListModel();
+        secretaires=new DefaultListModel();
     }
-
+    
     public void ajouterFiche(FicheDeSoins fiche) {
         fiches.addElement(fiche);
         for (int i = 0; i < fiches.size(); i++) {
@@ -297,10 +311,20 @@ public class DossierMedical {
         medecins.addElement(m);
         System.out.println("Médecin ajouté !");
     }
-
     public void retirerMedecin(Medecin m) {
         medecins.removeElement(m);
         m = null;
         System.out.println("Médecin retiré !");
     }
+     public void ajouterSecretaire(Secretaire s) {
+        secretaires.addElement(s);
+        System.out.println("Secrétaire ajouté !");
+    }
+
+     public void retirerSecretaire(Secretaire s){
+         secretaires.removeElement(s);
+         s = null;
+        System.out.println("Secrétaire retiré !");
+     } 
+    
 }

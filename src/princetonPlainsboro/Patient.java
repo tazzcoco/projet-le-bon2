@@ -25,7 +25,8 @@ public class Patient {
         this.adresse = adresse;
         this.dateNaissance = dateNaissance;
     }
-
+ 
+    
     public String toString() {
         String s =prenom + " " + nom + ", "+ dateNaissance;
         if (dateNaissance != null) {
