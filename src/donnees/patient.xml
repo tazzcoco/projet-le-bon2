@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE root SYSTEM "roles.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <root>
     <patient>
         <nom>Track</nom>
@@ -42,5 +41,26 @@
         <adresse>Grenoble</adresse>
         <dateDeNaissance>1994-09-23</dateDeNaissance>
         <numeroSecu>1234567891234</numeroSecu>
+    </patient>
+<patient>
+        <nom>Poke</nom>
+        <prenom>Sacha</prenom>
+        <adresse>Johto</adresse>
+        <dateDeNaissance>2002-11-10</dateDeNaissance>
+        <numeroSecu>1212121212121</numeroSecu>
+    </patient>
+<patient>
+        <nom>Poke</nom>
+        <prenom>Sacha2</prenom>
+        <adresse>Johto</adresse>
+        <dateDeNaissance>1-1-1</dateDeNaissance>
+        <numeroSecu>1212121212121</numeroSecu>
+    </patient>
+<patient>
+        <nom>a</nom>
+        <prenom>a</prenom>
+        <adresse>a</adresse>
+        <dateDeNaissance>1-1-1</dateDeNaissance>
+        <numeroSecu>1</numeroSecu>
     </patient>
 </root>

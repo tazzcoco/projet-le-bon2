@@ -21,10 +21,11 @@ public class Acte {
         
     }
    
-    public Acte(Code code, int coef,String observations) {
+    public Acte(Code code, int coef,String observations, String type) {
         this.code = code;
         this.coef = coef;
-        this.observations = observations;        
+        this.observations = observations;    
+        this.type = type;
     }
     
     public String getObservations(){
@@ -72,6 +73,10 @@ public class Acte {
     
     public String getLibelle() {
         return code.getLibelle();
+    }
+    
+    public String getType(){
+        return type;
     }
 
 }

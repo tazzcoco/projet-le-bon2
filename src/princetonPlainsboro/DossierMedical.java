@@ -1,21 +1,9 @@
 package princetonPlainsboro;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.Box;
 import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class DossierMedical {
 
@@ -63,16 +51,19 @@ public class DossierMedical {
     }
 
     public void ajouterFiche(FicheDeSoins fiche) {
-        fiches.addElement(fiche);
-        for (int i = 0; i < fiches.size(); i++) {
-            if (!medecins.contains(fiche.getMedecin())) {
-                medecins.addElement(fiche.getMedecin());
+        if (!fiches.contains(fiche)) {
+            fiches.addElement(fiche);
+            LectureXML.addFicheDeSoins(fiche);
+            for (int i = 0; i < fiches.size(); i++) {
+                if (!medecins.contains(fiche.getMedecin())) {
+                    medecins.addElement(fiche.getMedecin());
+                }
+                if (!patients.contains(fiche.getPatient())) {
+                    patients.addElement(fiche.getPatient());
+                }
             }
-            if (!patients.contains(fiche.getPatient())) {
-                patients.addElement(fiche.getPatient());
-            }
+            System.out.println("Fiche de soins créée !");
         }
-
     }
 
     public void supprimerFiche(FicheDeSoins fiche) {

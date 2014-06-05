@@ -36,8 +36,9 @@ public class FicheDeSoins extends javax.swing.JFrame {
     private MenuMedical mm;
     private Patient p;
     private Medecin m;
-    private String l;
-    private String c;
+    private String l="";
+    private String c="";
+    private String s ="";
     private princetonPlainsboro.FicheDeSoins f;
     DefaultListModel<princetonPlainsboro.FicheDeSoins> fichesP = new DefaultListModel();
 
@@ -328,7 +329,7 @@ public class FicheDeSoins extends javax.swing.JFrame {
         DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
         cb1 = new JComboBox();
         DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());
-        cb2 = new JComboBox();;
+        cb2 = new JComboBox();
         newPatient = new JButton("Nouveau Patient");
 
         //creation des JTextFields pour récupérer les renseignements du patient et du JPanel        
@@ -462,22 +463,19 @@ public class FicheDeSoins extends javax.swing.JFrame {
         f = new princetonPlainsboro.FicheDeSoins(p, m, date);
 
         if (result == JOptionPane.OK_OPTION) {
-            dm.ajouterFiche(f);
             //panel global
             JPanel panelGlobal2 = new JPanel();
 
-            //TextField permettant de recuperer la date pour l'acte a créer
-            JTextField fieldDateDay = new JTextField(3);
-            JTextField fieldDateMonth = new JTextField(3);
-            JTextField fieldDateYear = new JTextField(7);
-
             //ComboBox  permettant de choisir dans la liste des libelles/des medecins
             final JComboBox comboLibelle;
-            DecimalFormat dec = new DecimalFormat("0.00");
+            final JComboBox cbType;
 
             DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getLibelles().toArray());
             comboLibelle = new JComboBox(cbModel);
             comboLibelle.setSelectedItem(dm.getLibelles().get(0));
+            cbType = new JComboBox();
+            cbType.addItem("Thérapeutique");
+            cbType.addItem("Diagnostique");            
 
             ActionListener cbListener1 = new ActionListener() {
 
@@ -511,17 +509,25 @@ public class FicheDeSoins extends javax.swing.JFrame {
                         } else if (l.equals("prothese dentaire")) {
                             c = "PRO";
                         }
+                    } else if (cb == cbType){
+                        if(cb.getSelectedItem().equals("Thérapeutique")){
+                            s = "thérapeutique";
+                        }
+                        if(cb.getSelectedItem().equals("Diagnostique")){
+                            s = "diagnostique";
+                        }
                     }
                 }
 
             };
-
+            cbType.addActionListener(cbListener);
             comboLibelle.addActionListener(cbListener1);
 
             //TextArea pour récupérer les observation éventuelle du medecin
             JTextArea areaObservation = new JTextArea();
 
             //création des JLabels            
+            JLabel labelType = new JLabel("Type de l'acte :");
             JLabel labelLibelle = new JLabel("Nom de l'acte :");
             JLabel labelObservation = new JLabel("Observation éventuelle :");
 
@@ -531,7 +537,11 @@ public class FicheDeSoins extends javax.swing.JFrame {
 
             //organisation panelGlobal
             panelGlobal2.setLayout(
-                    new GridLayout(3, 2));
+                    new GridLayout(4, 2));
+            panelGlobal2.add(labelType);
+            
+            panelGlobal2.add(cbType);
+            
             panelGlobal2.add(labelLibelle);
 
             panelGlobal2.add(comboLibelle);
@@ -551,28 +561,30 @@ public class FicheDeSoins extends javax.swing.JFrame {
             
             if (result2 == JOptionPane.OK_OPTION) {
                 if (c.equals("CS")) {
-                    a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("CSC")) {
-                    a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("FP")) {
-                    a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("KC")) {
-                    a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("KE")) {
-                    a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("K")) {
-                    a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("KFA")) {
-                    a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("KFB")) {
-                    a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("ORT")) {
-                    a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 } else if (c.equals("PRO")) {
-                    a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                    a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
                 }
                 f.ajouterActe(a);
             }
+            
+            dm.ajouterFiche(f);
             jTextArea1.setText(dm.afficher());
             jTextArea1.repaint();
         }
@@ -603,6 +615,7 @@ public class FicheDeSoins extends javax.swing.JFrame {
                     }
                     DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(fichesP.toArray());
                     cb2.setModel(cbModel2);
+                    cb2.setSelectedItem(fichesP.get(1));
                 } else if (cb == cb2) {
                     for (int i = 0; i < dm.getFiches().size(); i++) {
                         if (cb.getSelectedItem().equals(dm.getFiches().get(i))) {
