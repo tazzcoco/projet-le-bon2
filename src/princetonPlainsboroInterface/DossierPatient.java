@@ -36,6 +36,7 @@ public class DossierPatient extends javax.swing.JFrame {
     private NouvelleAdmission na;
     private String l;
     private String c;
+    private String s ="";
     private Acte acte;
     private Medecin m;
     private Patient currentPatient;    
@@ -88,7 +89,12 @@ public class DossierPatient extends javax.swing.JFrame {
         //ComboBox  permettant de choisir dans la liste des libelles/des medecins
         final JComboBox comboLibelle;
         final JComboBox cb1;
+        final JComboBox cbType;
         DecimalFormat dec = new DecimalFormat("0.00");
+        
+        cbType = new JComboBox();        
+        cbType.addItem("Thérapeutique");
+        cbType.addItem("Diagnostique");
 
         DefaultComboBoxModel cbModel = new DefaultComboBoxModel(dm.getLibelles().toArray());
         comboLibelle = new JComboBox(cbModel);
@@ -96,7 +102,7 @@ public class DossierPatient extends javax.swing.JFrame {
         DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getMedecins().toArray());
         cb1 = new JComboBox(cbModel1);
         cb1.setSelectedItem(dm.getMedecins().get(0));
-
+        
         ActionListener cbListener = new ActionListener() {
 
             @Override
@@ -135,18 +141,27 @@ public class DossierPatient extends javax.swing.JFrame {
                             m = dm.getMedecins().get(i);
                         }
                     }
+                } else if (cb == cbType){
+                    if(cb.getSelectedItem().equals("Thérapeutique")){
+                        s = "thérapeutique";
+                    }
+                    if(cb.getSelectedItem().equals("Diagnostique")){
+                        s = "diagnostique";
+                    }
                 }
             }
         };
 
         comboLibelle.addActionListener(cbListener);
         cb1.addActionListener(cbListener);
+        cbType.addActionListener(cbListener);
 
         //TextArea pour récupérer les observation éventuelle du medecin
         JTextArea areaObservation = new JTextArea();
 
         //création des JLabels
         JLabel labelDate = new JLabel("Date de l'Acte :");
+        JLabel labelType = new JLabel("Type de l'acte :");
         JLabel labelLibelle = new JLabel("Nom de l'acte :");
         JLabel labelObservation = new JLabel("Observation éventuelle :");
 
@@ -159,12 +174,14 @@ public class DossierPatient extends javax.swing.JFrame {
 
         //JLabel et JTextField
         JLabel labelCoef = new JLabel("Coefficient : ");
-        JTextField fieldCoef = new JTextField(4);
+        JTextField fieldCoef = new JTextField(2);
 
         //organisation panelGlobal
-        panelGlobal.setLayout(new GridLayout(5, 2));
+        panelGlobal.setLayout(new GridLayout(6, 2));
         panelGlobal.add(labelDate);
         panelGlobal.add(panelDate1);
+        panelGlobal.add(labelType);
+        panelGlobal.add(cbType);
         panelGlobal.add(labelLibelle);
         panelGlobal.add(comboLibelle);
         panelGlobal.add(labelObservation);
@@ -182,25 +199,25 @@ public class DossierPatient extends javax.swing.JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
             if (c.equals("CS")) {
-                a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.CS, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("CSC")) {
-                a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.CSC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("FP")) {
-                a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.FP, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("KC")) {
-                a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.KC, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("KE")) {
-                a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.KE, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("K")) {
-                a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.K, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("KFA")) {
-                a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.KFA, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("KFB")) {
-                a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.KFB, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("ORT")) {
-                a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.ORT, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             } else if (c.equals("PRO")) {
-                a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText());
+                a = new Acte(Code.PRO, Integer.parseInt(fieldCoef.getText()), areaObservation.getText(), s);
             }
 
             for (int z = 0; z < dm.getFiches().getSize(); z++) {
