@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.text.DecimalFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -633,6 +635,16 @@ public class DossierPatient extends javax.swing.JFrame {
                 fds.getJComboBox1().setModel(cbModel);
                 fds.setVisible(true);
                 setVisible(false);
+            } else if (source == jButton4){
+                PrinterJob contenu = PrinterJob.getPrinterJob();
+                contenu.setPrintable(new Impression());
+                if (contenu.printDialog()) {
+                    try {
+                        contenu.print();
+                    } catch (PrinterException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             } else if (source == jButton5) {
                 //méthode retirerPatient(Patient p); de DossierMedical
                 dm.retirerPatient(currentPatient);

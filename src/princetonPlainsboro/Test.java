@@ -1,5 +1,8 @@
 package princetonPlainsboro;
 
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
 class Test {
 
     public static void main(String[] args) {
@@ -21,7 +24,6 @@ class Test {
 
         //Medecin m1 = new Medecin("Deblouze", "Agathe", "Cardiologue", );
         //dm.afficherListePatients(m1);
-
         System.out.println("\n********\n");
 
         Date d1 = new Date(1, 11, 2005);
@@ -55,15 +57,13 @@ class Test {
         System.out.println("\n");
 
         //dm.trierDates();
-        
         System.out.println("\n");
         dm.afficherListeCoutCroissant();
         //dm.ajouterMedecin();
-        
+
         System.out.println("Test XML !!");
-        Medecin m = new Medecin("Jean", "Lourde", "Urologie","0145236789", "Lourde_J");
+        Medecin m = new Medecin("Jean", "Lourde", "Urologie", "0145236789", "Lourde_J");
         LectureXML.addMedecin(m);
-        
-        
+
     }
 }

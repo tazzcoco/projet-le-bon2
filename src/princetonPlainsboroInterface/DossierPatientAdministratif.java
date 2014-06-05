@@ -8,6 +8,8 @@ package princetonPlainsboroInterface;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextArea;
@@ -28,7 +30,6 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
         jButton1.addActionListener(dpal);
         jButton2.addActionListener(dpal);
         jButton3.addActionListener(dpal);
-        jButton4.addActionListener(dpal);
         jButton5.addActionListener(dpal);
         jButton6.addActionListener(dpal);
     }
@@ -50,7 +51,6 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -113,11 +113,6 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(153, 153, 255));
         jButton2.setText("Imprimer");
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 51));
-        jButton4.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(51, 51, 51));
-        jButton4.setText("Supprimer Patient");
-
         jLabel1.setBackground(new java.awt.Color(153, 153, 255));
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 40)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 51));
@@ -142,19 +137,14 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
-                                .addComponent(jButton2))
-                            .addComponent(jScrollPane3))
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane3))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -166,9 +156,7 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -227,7 +215,6 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
@@ -262,12 +249,15 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
                 lpa.setVisible(true);
                 setVisible(false);
             } else if (source == jButton2) {
-                //imprimer le document -> se renseigner sur la classe PrinterJob
-                //pas de nouvelles fenêtres à instancier ici
-            } else if (source == jButton4) {
-                //méthode retirerPatient(Patient p) de DossierMedical
-                //fenêtre de confirmation à ajouter "Patient retiré"
-                repaint();
+                PrinterJob contenu = PrinterJob.getPrinterJob();
+                contenu.setPrintable(new Impression());
+                if (contenu.printDialog()) {
+                    try {
+                        contenu.print();
+                    } catch (PrinterException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             } else if (source == jButton5) {
                 lpa = new ListePatientsAdministratif();
                 lpa.setBounds(positionFenetre);
@@ -282,7 +272,7 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
                 lma.getJList2().setModel(dm.getMedecins());
                 lma.setVisible(true);
                 setVisible(false);
-            } else if (source == jButton3){
+            } else if (source == jButton3) {
                 DefaultListModel<String> specialites = new DefaultListModel();
                 for (int i = 0; i < dm.getMedecins().size(); i++) {
                     if (!specialites.contains(dm.getMedecins().get(i).getSpecialite())) {
