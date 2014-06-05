@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import princetonPlainsboro.*;
 
 public class PrincetonInterface extends javax.swing.JFrame {
-    
+
     private MenuMedical mm;
     private MenuAdministratif ma;
     private DossierMedical dm;
@@ -284,24 +284,29 @@ public class PrincetonInterfaceListener implements ActionListener {
                             mm.setVisible(true);
                             setVisible(false);
                             break;
-                        }                        
+                        }
                     }
-                    if (i == dm.getMedecins().size()){
+                    if (i == dm.getMedecins().size()) {
                         JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-                    } 
+                    }
 
                 } else if (secteur == 1) {
-//                    for (int i = 0; i < dm.getSecretaires().size(); i++) {
-//                        if (jFormattedTextField1.getText().equals(dm.getSecretaires().get(i).getNom().toUpperCase())) {
-//                            if (jPasswordField1.getText().equals(dm.getSecretaires().get(i).getMdp())) {
-                    MenuAdministratif ma = new MenuAdministratif();
-                    ma.setDM(dm);
-                    ma.setLocationRelativeTo(getParent());
-                    ma.setVisible(true);
-                    setVisible(false);
-//                            }
-//                        }
-//                    }
+                    int i = 0;
+                    for (; i < dm.getSecretaires().size(); i++) {
+                        if (jFormattedTextField1.getText().equals(dm.getSecretaires().get(i).getNomS().toUpperCase())) {
+                            if (jPasswordField1.getText().equals(dm.getSecretaires().get(i).getMDPS())) {
+                                MenuAdministratif ma = new MenuAdministratif();
+                                ma.setDM(dm);
+                                ma.setLocationRelativeTo(getParent());
+                                ma.setVisible(true);
+                                setVisible(false);
+                                break;
+                            }
+                        }
+                    }
+                    if (i == dm.getSecretaires().size()) {
+                        JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }

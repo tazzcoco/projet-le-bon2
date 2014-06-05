@@ -30,7 +30,7 @@ public class DossierMedical {
         return fiches;
     }
 
-    public DefaultListModel<Secretaire> getSecretaire() {
+    public DefaultListModel<Secretaire> getSecretaires() {
         return secretaires;
     }
 
