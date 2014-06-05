@@ -21,4 +21,16 @@ public class Secretaire {
         this.prenom = prenom;
         this.mdp = mdp;
     }
+    
+    public String getNomS(){
+        return nom;
+    }
+    
+    public String getPrenomS(){
+        return prenom;
+    }
+    
+    public String getMDPS(){
+        return mdp;
+    }
 }

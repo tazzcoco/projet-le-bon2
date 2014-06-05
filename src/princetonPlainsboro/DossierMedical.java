@@ -23,7 +23,7 @@ public class DossierMedical {
     private DefaultListModel<FicheDeSoins> fiches; //liste des fiches de soins 
     private DefaultListModel<Patient> patients; //liste des patients
     private DefaultListModel<Medecin> medecins; //liste des médecins
-    private DefaultListModel<Secretaire> secretaires;
+    private DefaultListModel<Secretaire> secretaires;//liste de secretaires
 
     //accesseurs des listes
     public DefaultListModel<FicheDeSoins> getFiches() {
