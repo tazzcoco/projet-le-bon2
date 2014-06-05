@@ -7,16 +7,30 @@
  */
 package princetonPlainsboro;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Lecture d'un document XML et transformation en instances Java.
@@ -199,13 +213,11 @@ public class LectureXML {
                     case XMLStreamConstants.END_ELEMENT:
 
                         if (parser.getLocalName().equals("medecin")) {
-                            System.out.println("bitch");
                             medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante, numeroTelCourant, motDePasseMedecin);
                             medecins.addElement(medecinCourant);
                             break;
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            System.out.println("pute");
                             nomCourant = donneesCourantes ;
                         }
                         if (parser.getLocalName().equals("prenom")) {
@@ -377,8 +389,8 @@ public class LectureXML {
             System.out.println("Verifier le chemin.");
             System.out.println(ex.getMessage());
         }
-        dossierCourant.setPatient(this.getPatientLourd());
-        dossierCourant.setMedecins(this.getMedecinLourd());
+       dossierCourant.setPatient(this.getPatientLourd());
+       dossierCourant.setMedecins(this.getMedecinLourd());
         return dossierCourant;
 
     }
@@ -416,5 +428,61 @@ public class LectureXML {
         }
         // probleme : code inconnu
         return null;
+    }
+    
+    public static boolean addMedecin (Medecin m) {
+        try {
+            File xmlMedecins = new File(repBase + "medecin.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(xmlMedecins);
+            
+            NodeList nl = doc.getElementsByTagName("medecin");
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node n = nl.item(i);
+                System.out.println(n.getNodeName());
+                if (n.getNodeType() == Node.ELEMENT_NODE)
+                System.out.println(((Element)n).getElementsByTagName("nom").item(0).getTextContent());
+                
+            }
+            // Get root element.
+            Element root = doc.getDocumentElement();
+            // Create a new medecin.
+            Element medecin = doc.createElement("medecin");
+            // Create name.
+            Element nom = doc.createElement("nom");
+            nom.setTextContent(m.getNom());
+            // Append name to medecin.
+            medecin.appendChild(nom);
+            // Create prenom.
+            Element prenom = doc.createElement("prenom");
+            prenom.setTextContent(m.getPrenom());
+            // Append prenom to medecin.
+            medecin.appendChild(prenom);
+            
+            root.appendChild(medecin);
+            
+            
+           
+            try {
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            // send DOM to file
+            tr.transform(new DOMSource(doc), 
+                                 new StreamResult(new FileOutputStream(repBase + "medecin.new.xml")));
+
+        } catch (TransformerException te) {
+            System.out.println(te.getMessage());
+        }
+            
+        } catch (Exception e) {
+            
+        }
+        return true;
     }
 }

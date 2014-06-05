@@ -3,25 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierMédecinAdministratif.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/DossierMedical.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierPatientAdministratif.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/donnees/dossiers.xml</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/NouvelleAdmission.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Date.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Patient.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/ListePatientsAdministratif.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/FicheDeSoins.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/LectureXML.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/ListeMédecinsAdministratif.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/ListeMedecinMedical.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Acte.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/MenuAdministratif.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/ComparaisonFichesDates.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/FicheDeSoins.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/donnees/medecin.xml</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/MenuMedical.java</file>
-            <file>file:/C:/Users/Thomas/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Medecin.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/MenuAdministratif.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/donnees/medecin.xml</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Patient.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Code.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Test.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Medecin.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Secretaire.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/NouvelleAdmission.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/DossierMedical.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierMédecinAdministratif.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/ListeMédecinsAdministratif.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierPatientAdministratif.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/FicheDeSoins.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierMedecinMedical.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/MenuMedical.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/PrincetonInterface.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/DossierPatient.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/FicheDeSoins.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Acte.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/donnees/dossiers.xml</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/LectureXML.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboro/Date.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/CoutAdministratif.java</file>
+            <file>file:/C:/Users/Tommy/Documents/GitHub/projet-le-bon2/src/princetonPlainsboroInterface/ListeMedecinMedical.java</file>
         </group>
     </open-files>
 </project-private>

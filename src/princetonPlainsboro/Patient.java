@@ -83,8 +83,8 @@ public class Patient {
 
     //méthode affichant le dossier patient, le tableau des actes concernant un patient est instancié dans l'interface DossierPatient
     public String afficherDP() {
-        String s = "Dossier Patient";
-        s += "\n\nNom : " + nom;
+        String s = "";
+        s += "\nNom : " + nom;
         s += "\nPrénom : " + prenom;
         s += "\nDate de Naissance :" + dateNaissance;
         if (dateNaissance != null) {

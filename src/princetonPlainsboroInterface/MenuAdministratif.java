@@ -27,9 +27,9 @@ public class MenuAdministratif extends javax.swing.JFrame {
 
     public MenuAdministratif() {
         initComponents();
-        setLocationRelativeTo(getParent());
         LectureXML test = new LectureXML("dossiers.xml");
         dm = test.getDossier();
+        setLocationRelativeTo(getParent());
         mal = new MenuAdministratifListener();
         jButton1.addActionListener(mal);
         jButton2.addActionListener(mal);
@@ -273,7 +273,7 @@ public class MenuAdministratif extends javax.swing.JFrame {
                     }
                 }
                 ca = new CoutAdministratif();
-                ca.setBounds(positionFenetre);
+                ca.setLocationRelativeTo(getParent());
                 ca.setDM(dm);
                 DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
                 DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());

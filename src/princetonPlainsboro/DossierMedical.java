@@ -23,11 +23,13 @@ public class DossierMedical {
     private DefaultListModel<FicheDeSoins> fiches; //liste des fiches de soins 
     private DefaultListModel<Patient> patients; //liste des patients
     private DefaultListModel<Medecin> medecins; //liste des médecins
-    private DefaultListModel<Secretaire>secretaires;
+    private DefaultListModel<Secretaire> secretaires;
+
     //accesseurs des listes
     public DefaultListModel<FicheDeSoins> getFiches() {
         return fiches;
     }
+
     public DefaultListModel<Secretaire> getSecretaire() {
         return secretaires;
     }
@@ -39,15 +41,17 @@ public class DossierMedical {
     public DefaultListModel<Medecin> getMedecins() {
         return medecins;
     }
-    
-    public void setMedecins(DefaultListModel dlm){
-        this.medecins=dlm;
+
+    public void setMedecins(DefaultListModel dlm) {
+        this.medecins = dlm;
     }
-    public void setPatient(DefaultListModel dlm){
-        this.patients=dlm;
+
+    public void setPatient(DefaultListModel dlm) {
+        this.patients = dlm;
     }
-    public void setSecretaire(DefaultListModel dlm){
-        this.secretaires=dlm;
+
+    public void setSecretaire(DefaultListModel dlm) {
+        this.secretaires = dlm;
     }
 
     //constructeur
@@ -55,9 +59,9 @@ public class DossierMedical {
         fiches = new DefaultListModel();
         patients = new DefaultListModel();
         medecins = new DefaultListModel();
-        secretaires=new DefaultListModel();
+        secretaires = new DefaultListModel();
     }
-    
+
     public void ajouterFiche(FicheDeSoins fiche) {
         fiches.addElement(fiche);
         for (int i = 0; i < fiches.size(); i++) {
@@ -72,7 +76,9 @@ public class DossierMedical {
     }
 
     public void supprimerFiche(FicheDeSoins fiche) {
-        fiches.removeElement(fiche);
+        if (fiches.contains(fiche)) {
+            fiches.removeElement(fiche);
+        }
     }
 
     public String afficher() {
@@ -159,7 +165,7 @@ public class DossierMedical {
         for (int i = 0; i < fiches.size(); i++) {
             copieFiches.add(fiches.get(i));
         }
-        s += "Listes des fiches rangées par date croissante :\n";
+        s += "Listes des fiches rangées par dates croissantes :\n";
         while (!copieFiches.isEmpty()) {
             // on cherche la fiche de soins de date minimale :
             int imin = 0;
@@ -238,8 +244,8 @@ public class DossierMedical {
         }//end for
         return s;
     }
-    
-    public DefaultListModel getLibelles(){
+
+    public DefaultListModel getLibelles() {
         DefaultListModel<String> libelle = new DefaultListModel();
         for (int i = 0; i < getFiches().size(); i++) {
             for (int a = 0; a < getFiches().get(i).getActes().size(); a++) {
@@ -311,20 +317,22 @@ public class DossierMedical {
         medecins.addElement(m);
         System.out.println("Médecin ajouté !");
     }
+
     public void retirerMedecin(Medecin m) {
         medecins.removeElement(m);
         m = null;
         System.out.println("Médecin retiré !");
     }
-     public void ajouterSecretaire(Secretaire s) {
+
+    public void ajouterSecretaire(Secretaire s) {
         secretaires.addElement(s);
         System.out.println("Secrétaire ajouté !");
     }
 
-     public void retirerSecretaire(Secretaire s){
-         secretaires.removeElement(s);
-         s = null;
+    public void retirerSecretaire(Secretaire s) {
+        secretaires.removeElement(s);
+        s = null;
         System.out.println("Secrétaire retiré !");
-     } 
-    
+    }
+
 }

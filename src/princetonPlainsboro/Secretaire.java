@@ -15,6 +15,7 @@ public class Secretaire {
     private String nom;
     private String prenom;
     private String mdp;
+    
     public Secretaire(String nom, String prenom, String mdp) {
         this.nom = nom;
         this.prenom = prenom;

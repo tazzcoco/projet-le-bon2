@@ -46,7 +46,7 @@ public class Medecin {
     }
 
     public String toString() {
-        return "Dr " + prenom + " " + nom + ", " + specialite+ ", n°tel : "+ numTel;
+        return "Dr " + prenom + " " + nom + ", " + specialite+ ", n°tel : "+ numTel ;
     }
 
     public boolean equals(Object o) {
