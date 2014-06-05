@@ -43,11 +43,5 @@
         <numeroTel>15448315684</numeroTel>
         <motDePasse>blabla</motDePasse>
     </medecin>
-<medecin>
-        <nom>a</nom>
-        <prenom>a</prenom>
-        <specialite>a</specialite>
-        <numeroTel>1</numeroTel>
-        <motDePasse>a</motDePasse>
-    </medecin>
+
 </root>

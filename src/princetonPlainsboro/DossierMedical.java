@@ -53,7 +53,6 @@ public class DossierMedical {
     public void ajouterFiche(FicheDeSoins fiche) {
         if (!fiches.contains(fiche)) {
             fiches.addElement(fiche);
-            LectureXML.addFicheDeSoins(fiche);
             for (int i = 0; i < fiches.size(); i++) {
                 if (!medecins.contains(fiche.getMedecin())) {
                     medecins.addElement(fiche.getMedecin());
@@ -295,7 +294,6 @@ public class DossierMedical {
 
     public void ajouterPatient(Patient p) {
         patients.addElement(p);
-        LectureXML.addPatient(p);
         System.out.println("Patient ajouté !");
     }
 
@@ -307,7 +305,6 @@ public class DossierMedical {
 
     public void ajouterMedecin(Medecin m) {
         medecins.addElement(m);
-        LectureXML.addMedecin(m);
         System.out.println("Médecin ajouté !");
     }
 
