@@ -78,7 +78,6 @@ public class LectureXML {
                             break;
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            System.out.println("pute");
                             nomCourant = donneesCourantes ;
                         }
                         if (parser.getLocalName().equals("prenom")) {
@@ -143,7 +142,6 @@ public class LectureXML {
                             patients.addElement(patientCourant);
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            System.out.println("pute");
                             nomCourant = donneesCourantes ;
                         }
                         if (parser.getLocalName().equals("prenom")) {
@@ -490,7 +488,77 @@ public class LectureXML {
 
             // send DOM to file
             tr.transform(new DOMSource(doc), 
-                                 new StreamResult(new FileOutputStream(repBase + "medecin.new.xml")));
+                                 new StreamResult(new FileOutputStream(repBase + "medecin.xml")));
+
+        } catch (TransformerException te) {
+            System.out.println(te.getMessage());
+        }
+            
+        } catch (Exception e) {
+            
+        }
+        return true;
+    }
+    
+    public static boolean addPatient (Patient p) {
+        try {
+            File xmlMedecins = new File(repBase + "patient.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(xmlMedecins);
+            
+            NodeList nl = doc.getElementsByTagName("patient");
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node n = nl.item(i);
+                if (n.getNodeType() == Node.ELEMENT_NODE)
+                System.out.println(((Element)n).getElementsByTagName("nom").item(0).getTextContent());                
+            }
+            // Get root element.
+            Element root = doc.getDocumentElement();
+            // Create a new patient.
+            Element patient = doc.createElement("patient");
+            // Create name.
+            Element nom = doc.createElement("nom");
+            nom.setTextContent(p.getNom());
+            // Append name to patient.
+            patient.appendChild(nom);
+            // Create prenom.
+            Element prenom = doc.createElement("prenom");
+            prenom.setTextContent(p.getPrenom());
+            // Append prenom to patient.
+            patient.appendChild(prenom);
+            // Create adresse.
+            Element adresse = doc.createElement("adresse");
+            adresse.setTextContent(p.getAdresse());
+            // Append adresse to patient.
+            patient.appendChild(adresse);
+            // Create dateDeNaissance.
+            Element dateDeNaissance = doc.createElement("dateDeNaissance");
+            dateDeNaissance.setTextContent(p.getDateNaissance().afficherDate());
+            // Append dateDeNaissance to patient.
+            patient.appendChild(dateDeNaissance);
+            // Create numeroSecu.
+            Element numeroSecu = doc.createElement("numeroSecu");
+            numeroSecu.setTextContent(String.valueOf(p.getNumSecu()));
+            // Append motDePasse to patient.
+            patient.appendChild(numeroSecu);
+            
+            
+            root.appendChild(patient);
+            
+            
+           
+            try {
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+            // send DOM to file
+            tr.transform(new DOMSource(doc), 
+                                 new StreamResult(new FileOutputStream(repBase + "patient.xml")));
 
         } catch (TransformerException te) {
             System.out.println(te.getMessage());

@@ -304,6 +304,7 @@ public class DossierMedical {
 
     public void ajouterPatient(Patient p) {
         patients.addElement(p);
+        LectureXML.addPatient(p);
         System.out.println("Patient ajouté !");
     }
 
@@ -315,6 +316,7 @@ public class DossierMedical {
 
     public void ajouterMedecin(Medecin m) {
         medecins.addElement(m);
+        LectureXML.addMedecin(m);
         System.out.println("Médecin ajouté !");
     }
 

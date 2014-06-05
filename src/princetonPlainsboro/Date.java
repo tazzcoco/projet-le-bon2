@@ -88,7 +88,7 @@ public class Date implements Comparable {
     }
 
     public String afficherDate() {
-        String date= jour + "/" + mois + "/" + annee;
+        String date= annee + "-" + mois + "-" + jour;
         return date;
     }
 }

@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
-
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "roles.dtd">
 <root>
     <patient>
         <nom>Track</nom>
@@ -38,5 +35,12 @@
         <adresse>67, rue des gros 53000 PRINCETON</adresse>
         <dateDeNaissance>1963-10-15</dateDeNaissance>
         <numeroSecu>263105300115915</numeroSecu>
+    </patient>
+<patient>
+        <nom>Riviere</nom>
+        <prenom>Tommy</prenom>
+        <adresse>Grenoble</adresse>
+        <dateDeNaissance>1994-09-23</dateDeNaissance>
+        <numeroSecu>1234567891234</numeroSecu>
     </patient>
 </root>
