@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
 import princetonPlainsboro.*;
 
 public class PrincetonInterface extends javax.swing.JFrame {
-
+    
+    //déclaration des attributs
     private MenuMedical mm;
     private MenuAdministratif ma;
     private DossierMedical dm;
@@ -29,19 +30,27 @@ public class PrincetonInterface extends javax.swing.JFrame {
         initComponents();
         LectureXML test = new LectureXML("dossiers.xml");
         dm = test.getDossier();
+        
+        //instanciation des listeners
         pil = new PrincetonInterfaceListener();
         cbl = new ComboBoxListener();
+        
+        // ajout des actionListener aux composants de la frame
         jButton1.addActionListener(pil);
         jComboBox1.addActionListener(cbl);
         jComboBox1.addItem("Secteur médical");
         jComboBox1.addItem("Secteur administratif");
+        
+        //conservation de la position de la nouvelle frame
         setLocationRelativeTo(getParent());
     }
 
+    //getter de dossier medical
     public DossierMedical getDM() {
         return dm;
     }
 
+    // setter de dossier medical
     public void setDM(DossierMedical dm) {
         this.dm = dm;
     }
@@ -266,18 +275,20 @@ public class PrincetonInterface extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
-public class PrincetonInterfaceListener implements ActionListener {
+
+    //listener de la classe Princeton Interface permettant d'attribuer des action au différents composants
+    public class PrincetonInterfaceListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
 
-            if (source == jButton1) {
-                if (secteur == 0) {
+            if (source == jButton1) {  
+                if (secteur == 0) {  //"secteur médical" dans la combobox
                     int i = 0;
-                    for (; i < dm.getMedecins().size(); i++) {
-                        if ((jFormattedTextField1.getText().equals(dm.getMedecins().get(i).getNom().toUpperCase())
-                                && (jPasswordField1.getText().equals(dm.getMedecins().get(i).getMdp())))) {
+                    for (; i < dm.getMedecins().size(); i++) { // parcours liste des médecins
+                        if ((jFormattedTextField1.getText().equals(dm.getMedecins().get(i).getNom().toUpperCase())  // comparaison nom du medecin en maj et ce que l'on rentre
+                                && (jPasswordField1.getText().equals(dm.getMedecins().get(i).getMdp())))) {  // comparaison mdp medecin stocké et entré
                             mm = new MenuMedical();
                             mm.setDM(dm);
                             mm.setLocationRelativeTo(getParent());
@@ -290,15 +301,15 @@ public class PrincetonInterfaceListener implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
                     }
 
-                } else if (secteur == 1) {
+                } else if (secteur == 1) { // "secteur administratif" dans la combobox 
                     int i = 0;
-                    for (; i < dm.getSecretaires().size(); i++) {
-                        if (jFormattedTextField1.getText().equals(dm.getSecretaires().get(i).getNomS().toUpperCase())) {
-                            if (jPasswordField1.getText().equals(dm.getSecretaires().get(i).getMDPS())) {
-                                MenuAdministratif ma = new MenuAdministratif();
+                    for (; i < dm.getSecretaires().size(); i++) { //parcours de la liste des secretaire
+                        if (jFormattedTextField1.getText().equals(dm.getSecretaires().get(i).getNomS().toUpperCase())) {  //comparaison entre ce que l'on a rentré et nom de l'user en maj
+                            if (jPasswordField1.getText().equals(dm.getSecretaires().get(i).getMDPS())) {  // comparaison de String entre le mdp stocké et entré
+                                MenuAdministratif ma = new MenuAdministratif(); 
                                 ma.setDM(dm);
                                 ma.setLocationRelativeTo(getParent());
-                                ma.setVisible(true);
+                                ma.setVisible(true);    // ouverture du menu adm
                                 setVisible(false);
                                 break;
                             }
@@ -311,7 +322,8 @@ public class PrincetonInterfaceListener implements ActionListener {
             }
         }
     }
-
+    
+    // listener de la combobox permettant le choix entre secteur medical et administratif
     public class ComboBoxListener implements ActionListener {
 
         @Override
