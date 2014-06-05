@@ -40,5 +40,8 @@
 <medecin>
         <nom>Jean</nom>
         <prenom>Fist</prenom>
+        <specialite>Anal</specialite>
+        <numeroTel>000000000</numeroTel>
+        <motDePasse>OAL</motDePasse>
     </medecin>
 </root>

@@ -61,7 +61,7 @@ class Test {
         //dm.ajouterMedecin();
         
         System.out.println("Test XML !!");
-        Medecin m = new Medecin("Jean", "Fist", "Anal","000000000", "OAL");
+        Medecin m = new Medecin("Jean", "Lourde", "Urologie","0145236789", "Lourde_J");
         LectureXML.addMedecin(m);
     }
 }

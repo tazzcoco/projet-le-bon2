@@ -459,6 +459,22 @@ public class LectureXML {
             prenom.setTextContent(m.getPrenom());
             // Append prenom to medecin.
             medecin.appendChild(prenom);
+            // Create specialite.
+            Element specialite = doc.createElement("specialite");
+            specialite.setTextContent(m.getSpecialite());
+            // Append specialite to medecin.
+            medecin.appendChild(specialite);
+            // Create numeroTel.
+            Element numeroTel = doc.createElement("numeroTel");
+            numeroTel.setTextContent(m.getNumTel());
+            // Append numeroTel to medecin.
+            medecin.appendChild(numeroTel);
+            // Create motDePasse.
+            Element motDePasse = doc.createElement("motDePasse");
+            motDePasse.setTextContent(m.getMdp());
+            // Append motDePasse to medecin.
+            medecin.appendChild(motDePasse);
+            
             
             root.appendChild(medecin);
             
