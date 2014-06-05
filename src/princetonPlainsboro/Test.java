@@ -59,5 +59,9 @@ class Test {
         System.out.println("\n");
         dm.afficherListeCoutCroissant();
         //dm.ajouterMedecin();
+        
+        System.out.println("Test XML !!");
+        Medecin m = new Medecin("Jean", "Fist", "Anal","000000000", "OAL");
+        LectureXML.addMedecin(m);
     }
 }

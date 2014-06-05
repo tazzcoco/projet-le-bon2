@@ -23,6 +23,7 @@ public class DossierMedecinMedical extends javax.swing.JFrame {
     private ListeMedecinMedical lmm;
     private FicheDeSoins fds;
     private MenuMedical mm;
+    private Medecin currentMedecin;
     
     private DossierMedecinMedicalListener dmml;
 
@@ -36,9 +37,13 @@ public class DossierMedecinMedical extends javax.swing.JFrame {
         jButton2.addActionListener(dmml);
         jButton3.addActionListener(dmml);
         jButton4.addActionListener(dmml);
+        jButton5.addActionListener(dmml);
         jTextArea1.setText("Renseignements des médecins ici");
     }
-
+    
+    public void setCurrentMedecin(Medecin m){
+        this.currentMedecin = m;
+    }
     public DossierMedical getDM() {
         return dm;
     }
@@ -276,6 +281,14 @@ public class DossierMedecinMedicalListener implements ActionListener {
                 fds.setVisible(true);
                 setVisible(false);
             } else if (source == jButton4) {
+                lmm = new ListeMedecinMedical();
+                lmm.setBounds(positionFenetre);
+                lmm.setDM(dm);
+                lmm.getJList1().setModel(dm.getMedecins());
+                lmm.setVisible(true);
+                setVisible(false);
+            } else if (source == jButton5) {
+                dm.retirerMedecin(currentMedecin);                
                 lmm = new ListeMedecinMedical();
                 lmm.setBounds(positionFenetre);
                 lmm.setDM(dm);

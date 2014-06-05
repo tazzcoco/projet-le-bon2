@@ -14,7 +14,9 @@ import javax.swing.JOptionPane;
 import princetonPlainsboro.*;
 
 public class PrincetonInterface extends javax.swing.JFrame {
-
+    
+    private MenuMedical mm;
+    private MenuAdministratif ma;
     private DossierMedical dm;
     private PrincetonInterfaceListener pil;
     private ComboBoxListener cbl;
@@ -272,19 +274,21 @@ public class PrincetonInterfaceListener implements ActionListener {
 
             if (source == jButton1) {
                 if (secteur == 0) {
-                    for (int i = 0; i < dm.getMedecins().size(); i++) {
+                    int i = 0;
+                    for (; i < dm.getMedecins().size(); i++) {
                         if ((jFormattedTextField1.getText().equals(dm.getMedecins().get(i).getNom().toUpperCase())
                                 && (jPasswordField1.getText().equals(dm.getMedecins().get(i).getMdp())))) {
-                            MenuMedical mm = new MenuMedical();
+                            mm = new MenuMedical();
                             mm.setDM(dm);
                             mm.setLocationRelativeTo(getParent());
                             mm.setVisible(true);
                             setVisible(false);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-                        }
-                        break;
+                            break;
+                        }                        
                     }
+                    if (i == dm.getMedecins().size()){
+                        JOptionPane.showMessageDialog(null, "Mauvaise combinaison login/password", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                    } 
 
                 } else if (secteur == 1) {
 //                    for (int i = 0; i < dm.getSecretaires().size(); i++) {

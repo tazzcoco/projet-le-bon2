@@ -258,20 +258,19 @@
                   <Color blue="33" green="33" red="33" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="13">
-                    <StringItem index="0" value="Tous"/>
-                    <StringItem index="1" value="Radiologie"/>
-                    <StringItem index="2" value="Oncologie"/>
-                    <StringItem index="3" value="H&#xe9;matologie"/>
-                    <StringItem index="4" value="Dermatologie"/>
-                    <StringItem index="5" value="Neurologie"/>
-                    <StringItem index="6" value="Cardiologie"/>
-                    <StringItem index="7" value="ORL"/>
-                    <StringItem index="8" value="Anesth&#xe9;siologie"/>
-                    <StringItem index="9" value="G&#xe9;rontologie"/>
-                    <StringItem index="10" value="Gyn&#xe9;cologie"/>
-                    <StringItem index="11" value="P&#xe9;diatrie"/>
-                    <StringItem index="12" value="Urologie"/>
+                  <StringArray count="12">
+                    <StringItem index="0" value="Radiologie"/>
+                    <StringItem index="1" value="Oncologie"/>
+                    <StringItem index="2" value="H&#xe9;matologie"/>
+                    <StringItem index="3" value="Dermatologie"/>
+                    <StringItem index="4" value="Neurologie"/>
+                    <StringItem index="5" value="Cardiologie"/>
+                    <StringItem index="6" value="ORL"/>
+                    <StringItem index="7" value="Anesth&#xe9;siologie"/>
+                    <StringItem index="8" value="G&#xe9;rontologie"/>
+                    <StringItem index="9" value="Gyn&#xe9;cologie"/>
+                    <StringItem index="10" value="P&#xe9;diatrie"/>
+                    <StringItem index="11" value="Urologie"/>
                   </StringArray>
                 </Property>
               </Properties>

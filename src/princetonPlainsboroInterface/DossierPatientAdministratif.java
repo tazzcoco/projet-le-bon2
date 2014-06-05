@@ -290,7 +290,7 @@ public class DossierPatientAdministratif extends javax.swing.JFrame {
                     }
                 }
                 ca = new CoutAdministratif();
-                ca.setBounds(positionFenetre);
+                ca.setLocationRelativeTo(getParent());
                 ca.setDM(dm);
                 DefaultComboBoxModel cbModel1 = new DefaultComboBoxModel(dm.getPatients().toArray());
                 DefaultComboBoxModel cbModel2 = new DefaultComboBoxModel(dm.getPatients().toArray());

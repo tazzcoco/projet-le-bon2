@@ -46,7 +46,7 @@ public class Medecin {
     }
 
     public String toString() {
-        return "Dr " + prenom + " " + nom + ", " + specialite+ ", numero de tel :"+ numTel;
+        return "Dr " + prenom + " " + nom + ", " + specialite+ ", n°tel : "+ numTel ;
     }
 
     public boolean equals(Object o) {
@@ -59,8 +59,8 @@ public class Medecin {
     }
     
     public String afficherDM() {
-        String s = "Dossier Médecin";
-        s += "\n\nNom : " + nom;
+        String s = "";
+        s += "\nNom : " + nom;
         s += "\nPrénom : " + prenom;
         s += "\nSpécialité : " + specialite;
         s += "\n\n\tContact :\nNuméro de téléphone : "+numTel;

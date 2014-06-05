@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "roles.dtd">
 <root>
     
     <medecin>
@@ -38,5 +36,9 @@
         <specialite>ORL</specialite>
         <numeroTel>0442655932</numeroTel>
         <motDePasse>Foupasune_J</motDePasse>
+    </medecin>
+<medecin>
+        <nom>Jean</nom>
+        <prenom>Fist</prenom>
     </medecin>
 </root>
