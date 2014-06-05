@@ -47,6 +47,7 @@ public class LectureXML {
     public LectureXML(String nomFichier) {
         this.nomFichier = nomFichier;
     }
+
     public DefaultListModel getSecretaireLourd() {
         Secretaire secretaireCourant = null;
         String nomCourant = "";
@@ -78,7 +79,7 @@ public class LectureXML {
                             break;
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            nomCourant = donneesCourantes ;
+                            nomCourant = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("prenom")) {
                             prenomCourant = donneesCourantes;
@@ -109,6 +110,7 @@ public class LectureXML {
         }
         return secretaires;
     }
+
     public DefaultListModel getPatientLourd() {
         Patient patientCourant = null;
         String nomCourant = "";
@@ -116,7 +118,7 @@ public class LectureXML {
         String adresse = "";
         long numSecu = 0;
         String prenomCourant = "";
-        
+
         String donneesCourantes = "";
         DefaultListModel<Patient> patients;
 
@@ -142,12 +144,12 @@ public class LectureXML {
                             patients.addElement(patientCourant);
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            nomCourant = donneesCourantes ;
+                            nomCourant = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("prenom")) {
                             prenomCourant = donneesCourantes;
                         }
-                         if (parser.getLocalName().equals("dateDeNaissance")) {
+                        if (parser.getLocalName().equals("dateDeNaissance")) {
                             int annee = Integer.parseInt(donneesCourantes.substring(0, donneesCourantes.indexOf('-')));
                             int mois = Integer.parseInt(donneesCourantes.substring(donneesCourantes.indexOf('-') + 1, donneesCourantes.lastIndexOf('-')));
                             int jour = Integer.parseInt(donneesCourantes.substring(donneesCourantes.lastIndexOf('-') + 1, donneesCourantes.length()));
@@ -183,6 +185,7 @@ public class LectureXML {
         }
         return patients;
     }
+
     public DefaultListModel getMedecinLourd() {
         Medecin medecinCourant = null;
         String nomCourant = "";
@@ -216,7 +219,7 @@ public class LectureXML {
                             break;
                         }
                         if (parser.getLocalName().equals("nom")) {
-                            nomCourant = donneesCourantes ;
+                            nomCourant = donneesCourantes;
                         }
                         if (parser.getLocalName().equals("prenom")) {
                             prenomCourant = donneesCourantes;
@@ -337,7 +340,7 @@ public class LectureXML {
                             dossierCourant.ajouterFiche(f);
                         }
                         if (parser.getLocalName().equals("medecin")) {
-                            medecinCourant = new Medecin(nomCourant,prenomCourant,specialiteCourante,numeroTelCourant,motDePasseMedecin);
+                            medecinCourant = new Medecin(nomCourant, prenomCourant, specialiteCourante, numeroTelCourant, motDePasseMedecin);
                             //dossierCourant.setMedecins(this.getMedecinLourd());
                         }
                         if (parser.getLocalName().equals("nom")) {
@@ -387,8 +390,9 @@ public class LectureXML {
             System.out.println("Verifier le chemin.");
             System.out.println(ex.getMessage());
         }
-       dossierCourant.setPatient(this.getPatientLourd());
-       dossierCourant.setMedecins(this.getMedecinLourd());
+        dossierCourant.setSecretaire(this.getSecretaireLourd());
+        dossierCourant.setPatient(this.getPatientLourd());
+        dossierCourant.setMedecins(this.getMedecinLourd());
         return dossierCourant;
 
     }
@@ -427,21 +431,22 @@ public class LectureXML {
         // probleme : code inconnu
         return null;
     }
-    
-    public static boolean addMedecin (Medecin m) {
+
+    public static boolean addMedecin(Medecin m) {
         try {
             File xmlMedecins = new File(repBase + "medecin.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlMedecins);
-            
+
             NodeList nl = doc.getElementsByTagName("medecin");
             for (int i = 0; i < nl.getLength(); i++) {
                 Node n = nl.item(i);
                 System.out.println(n.getNodeName());
-                if (n.getNodeType() == Node.ELEMENT_NODE)
-                System.out.println(((Element)n).getElementsByTagName("nom").item(0).getTextContent());
-                
+                if (n.getNodeType() == Node.ELEMENT_NODE) {
+                    System.out.println(((Element) n).getElementsByTagName("nom").item(0).getTextContent());
+                }
+
             }
             // Get root element.
             Element root = doc.getDocumentElement();
@@ -472,46 +477,44 @@ public class LectureXML {
             motDePasse.setTextContent(m.getMdp());
             // Append motDePasse to medecin.
             medecin.appendChild(motDePasse);
-            
-            
+
             root.appendChild(medecin);
-            
-            
-           
+
             try {
-            Transformer tr = TransformerFactory.newInstance().newTransformer();
-            tr.setOutputProperty(OutputKeys.INDENT, "yes");
-            tr.setOutputProperty(OutputKeys.METHOD, "xml");
-            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
-            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                Transformer tr = TransformerFactory.newInstance().newTransformer();
+                tr.setOutputProperty(OutputKeys.INDENT, "yes");
+                tr.setOutputProperty(OutputKeys.METHOD, "xml");
+                tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+                tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-            // send DOM to file
-            tr.transform(new DOMSource(doc), 
-                                 new StreamResult(new FileOutputStream(repBase + "medecin.xml")));
+                // send DOM to file
+                tr.transform(new DOMSource(doc),
+                        new StreamResult(new FileOutputStream(repBase + "medecin.xml")));
 
-        } catch (TransformerException te) {
-            System.out.println(te.getMessage());
-        }
-            
+            } catch (TransformerException te) {
+                System.out.println(te.getMessage());
+            }
+
         } catch (Exception e) {
-            
+
         }
         return true;
     }
-    
-    public static boolean addPatient (Patient p) {
+
+    public static boolean addPatient(Patient p) {
         try {
             File xmlMedecins = new File(repBase + "patient.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlMedecins);
-            
+
             NodeList nl = doc.getElementsByTagName("patient");
             for (int i = 0; i < nl.getLength(); i++) {
                 Node n = nl.item(i);
-                if (n.getNodeType() == Node.ELEMENT_NODE)
-                System.out.println(((Element)n).getElementsByTagName("nom").item(0).getTextContent());                
+                if (n.getNodeType() == Node.ELEMENT_NODE) {
+                    System.out.println(((Element) n).getElementsByTagName("nom").item(0).getTextContent());
+                }
             }
             // Get root element.
             Element root = doc.getDocumentElement();
@@ -542,30 +545,27 @@ public class LectureXML {
             numeroSecu.setTextContent(String.valueOf(p.getNumSecu()));
             // Append motDePasse to patient.
             patient.appendChild(numeroSecu);
-            
-            
+
             root.appendChild(patient);
-            
-            
-           
+
             try {
-            Transformer tr = TransformerFactory.newInstance().newTransformer();
-            tr.setOutputProperty(OutputKeys.INDENT, "yes");
-            tr.setOutputProperty(OutputKeys.METHOD, "xml");
-            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
-            tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                Transformer tr = TransformerFactory.newInstance().newTransformer();
+                tr.setOutputProperty(OutputKeys.INDENT, "yes");
+                tr.setOutputProperty(OutputKeys.METHOD, "xml");
+                tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+                tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-            // send DOM to file
-            tr.transform(new DOMSource(doc), 
-                                 new StreamResult(new FileOutputStream(repBase + "patient.xml")));
+                // send DOM to file
+                tr.transform(new DOMSource(doc),
+                        new StreamResult(new FileOutputStream(repBase + "patient.xml")));
 
-        } catch (TransformerException te) {
-            System.out.println(te.getMessage());
-        }
-            
+            } catch (TransformerException te) {
+                System.out.println(te.getMessage());
+            }
+
         } catch (Exception e) {
-            
+
         }
         return true;
     }

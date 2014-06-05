@@ -63,5 +63,7 @@ class Test {
         System.out.println("Test XML !!");
         Medecin m = new Medecin("Jean", "Lourde", "Urologie","0145236789", "Lourde_J");
         LectureXML.addMedecin(m);
+        
+        
     }
 }
